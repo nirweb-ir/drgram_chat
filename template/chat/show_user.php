@@ -9,7 +9,7 @@ include "./template/chat/show_user/user_pv.php";
 
         <div class="filter_top_pv">
 
-            <div class="filter_top_pv_item  active ">   <!--  active  -->
+            <div status="waiting" class="filter_top_pv_item  ">   <!--  active  -->
                 <div class="filter_top_pv_item_fill" >
                     <svg fill="#fff" height="800px" width="800px"
                          viewBox="0 0 297 297" xml:space="preserve">
@@ -32,11 +32,11 @@ include "./template/chat/show_user/user_pv.php";
                             C138.508,133.545,142.981,138.019,148.5,138.019z"/>
                     </g>
                 </svg>
-                    <p> درحال انتظار </p>
+                    <p> درحال انتظار  <span class="counter_pv_new active"> 1 </span>  </p> <!-- active -->
                 </div>
             </div>
 
-            <div class="filter_top_pv_item active">  <!--  active  -->
+            <div status="nowaiting" class="filter_top_pv_item  active ">  <!--  active  -->
 
                 <div class="filter_top_pv_item_fill" >
                     <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,8 +59,11 @@ include "./template/chat/show_user/user_pv.php";
         <div class="chat_list_answered_chats " id="chatList">  <!--  active  -->
             <?php
             func_user_pv(true, "ع", "علی پارسا", "سلام وقت بخیر", 2);
-            func_user_pv(true, "ع", "علی پارسا", "سلام وقت بخیر", 2);
             ?>
+        </div>
+
+        <div class=" message_waiting_receive_messages active ">
+            <p>در انتظار دریافت پیام ها </p>
         </div>
 
     </div>
