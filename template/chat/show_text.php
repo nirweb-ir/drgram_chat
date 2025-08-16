@@ -9,7 +9,7 @@
 
     <div class="section_show_message_header">
 
-        <div class=" section_show_message_header_icon_menu section_show_message_header_item ">
+        <div class=" section_show_message_header_icon_menu section_show_message_header_item active ">
             <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8 12H8.00901M12.0045 12H12.0135M15.991 12H16" stroke="#1C274C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
@@ -28,7 +28,7 @@
                 <path d="M8.42996 16.5501C9.8659 16.5501 11.03 15.386 11.03 13.9501C11.03 12.5142 9.8659 11.3501 8.42996 11.3501C6.99402 11.3501 5.82996 12.5142 5.82996 13.9501C5.82996 15.386 6.99402 16.5501 8.42996 16.5501Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <p> تنظیمات </p>
-        </div>
+        </div>  <!-- active -->
 
     </div>
 
@@ -42,7 +42,7 @@
 
             <div class="messages-container" id="messagesContainer">
 
-                <div class=" show_first_message_in_louding active">  <!-- active -->
+                <div class=" show_first_message_in_louding  active">  <!-- active -->
                     <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 9H17M7 13H12M21 20L17.6757 18.3378C17.4237 18.2118 17.2977 18.1488 17.1656 18.1044C17.0484 18.065 16.9277 18.0365 16.8052 18.0193C16.6672 18 16.5263 18 16.2446 18H6.2C5.07989 18 4.51984 18 4.09202 17.782C3.71569 17.5903 3.40973 17.2843 3.21799 16.908C3 16.4802 3 15.9201 3 14.8V7.2C3 6.07989 3 5.51984 3.21799 5.09202C3.40973 4.71569 3.71569 4.40973 4.09202 4.21799C4.51984 4 5.0799 4 6.2 4H17.8C18.9201 4 19.4802 4 19.908 4.21799C20.2843 4.40973 20.5903 4.71569 20.782 5.09202C21 5.51984 21 6.0799 21 7.2V20Z" stroke="#9e9e9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -50,12 +50,12 @@
                 </div>
 
                 <?php
-//                            show_image("");
-//                            show_image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgnb3288Ih_3BYFuAdq1_eMWEVGN8TQliJKeIEeVn9XmCtXj5CCSte1fv5EwjJMnSu2hE&usqp=CAU");
-//                            func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
-//                            func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
-//                            func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
-//                            func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
+//                 show_image("");
+//                 show_image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgnb3288Ih_3BYFuAdq1_eMWEVGN8TQliJKeIEeVn9XmCtXj5CCSte1fv5EwjJMnSu2hE&usqp=CAU");
+                 func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
+                 func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
+                 func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
+                 func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
                 ?>
 
             </div>

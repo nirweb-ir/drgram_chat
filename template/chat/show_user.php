@@ -3,9 +3,9 @@ include "./template/chat/show_user/user_pv.php";
 ?>
 
 
-<div class=" section_show_pv_container ">
+<div class=" section_show_pv_container active ">  <!-- active -->
 
-    <div class=" section_show_pv sidebar menu_show_cart_pv show " id="sidebar">
+    <div class=" section_show_pv sidebar menu_show_cart_pv show active " id="sidebar">
 
         <div class="filter_top_pv">
 
@@ -62,7 +62,7 @@ include "./template/chat/show_user/user_pv.php";
             ?>
         </div>
 
-        <div class=" message_waiting_receive_messages active ">
+        <div class=" message_waiting_receive_messages active ">  <!-- active -->
             <p>در انتظار دریافت پیام ها </p>
         </div>
 
