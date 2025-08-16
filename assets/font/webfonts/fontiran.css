@@ -1,0 +1,94 @@
+
+@font-face {
+	font-family: Yekan Bakh FaNum;
+	font-style: normal;
+	font-weight: 100;
+	font-stretch: normal;
+	src: url('woff/YekanBakhFaNum-Thin.woff') format('woff'),   
+	url('woff2/YekanBakhFaNum-Thin.woff2') format('woff2');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Yekan Bakh FaNum;
+	font-style: normal;
+	font-weight: 300;
+	font-stretch: normal;
+	src: url('woff/YekanBakhFaNum-Light.woff') format('woff'),   
+	url('woff2/YekanBakhFaNum-Light.woff2') format('woff2');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Yekan Bakh FaNum;
+	font-style: normal;
+	font-weight: normal;
+	font-stretch: normal;
+	src: url('woff/YekanBakhFaNum-Regular.woff') format('woff'),   
+	url('woff2/YekanBakhFaNum-Regular.woff2') format('woff2');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Yekan Bakh FaNum;
+	font-style: normal;
+	font-weight: 600;
+	font-stretch: normal;
+	src: url('woff/YekanBakhFaNum-SemiBold.woff') format('woff'),   
+	url('woff2/YekanBakhFaNum-SemiBold.woff2') format('woff2');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Yekan Bakh FaNum;
+	font-style: normal;
+	font-weight: bold;
+	font-stretch: normal;
+	src: url('woff/YekanBakhFaNum-Bold.woff') format('woff'),   
+	url('woff2/YekanBakhFaNum-Bold.woff2') format('woff2');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Yekan Bakh FaNum;
+	font-style: normal;
+	font-weight: 800;
+	font-stretch: normal;
+	src: url('woff/YekanBakhFaNum-ExtraBold.woff') format('woff'),   
+	url('woff2/YekanBakhFaNum-ExtraBold.woff2') format('woff2');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Yekan Bakh FaNum;
+	font-style: normal;
+	font-weight: 900;
+	font-stretch: normal;
+	src: url('woff/YekanBakhFaNum-Black.woff') format('woff'),   
+	url('woff2/YekanBakhFaNum-Black.woff2') format('woff2');
+	font-display: swap;
+}
+
+@font-face {
+	font-family: Yekan Bakh FaNum;
+	font-style: normal;
+	font-weight: 950;
+	font-stretch: normal;
+	src: url('woff/YekanBakhFaNum-ExtraBlack.woff') format('woff'),   
+	url('woff2/YekanBakhFaNum-ExtraBlack.woff2') format('woff2');
+	font-display: swap;
+}
+
+
+
+
+p, a, span, li, div, strong, b, button, input, input::placeholder, textarea, textarea::placeholder, select, pre, h1, h2, h3, h4, h5, h6 {
+	font-family: "Yekan Bakh FaNum", serif !important;
+}
+
+
+
+
+
+
+
