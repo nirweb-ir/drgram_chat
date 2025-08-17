@@ -400,7 +400,11 @@ p.not_find_message {
     position: relative;
     word-wrap: break-word;
 }
-
+.message-bubble img{
+    width: 100%;
+    max-width: 100px;
+    height: auto;
+}
 .message.received .message-bubble {
     background: white;
     font-size: 15px;

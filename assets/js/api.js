@@ -10,16 +10,28 @@ function toShamsi(dateInput) {
     });
 }
 
-function send_messages_chat(chat_id, message) {
+function send_messages_chat(chat_id, message,type = 'text') {
     var chatBox = $('.chat_user_box_messages');
     let data = ''
     let time = toShamsi(Date.now() / 1000)
-    data = `<div class="message sent">
+    if (type === 'image') {
+        data = `<div class="message sent">
+                             <div class="message-bubble image_message">
+                                <a href="` + message + `"  target="_blank">
+                            <img src="` + message + `">
+                                </a>
+                                    <div class="message-time"> ` + time + ` </div>
+                            </div>
+                        </div>`;
+
+    }else {
+        data = `<div class="message sent">
                             <div class="message-bubble">
                                 ` + message + `
                                     <div class="message-time"> ` + time + ` </div>
                             </div>
                         </div>`;
+    }
 
     chatBox.append(data)
     chatBox.scrollTop(chatBox[0].scrollHeight);
@@ -28,7 +40,7 @@ function send_messages_chat(chat_id, message) {
         type: "POST",
         data: {
             action: "send_messages_to_chat",
-            chat_id,message
+            chat_id,message,type
         },
         dataType: "json",
         success: function (response) {
@@ -63,12 +75,25 @@ function get_messages_chat(chat_id) {
                 $.each(response, function (index, value) {
                     let timestamp = new Date(value.created_at).getTime();
                     let time = toShamsi(timestamp/1000)
-                    data = data + `<div class="message received">
+                    if (value.type === 'image'){
+                        data = data + `<div class="message received">
+                            <div class="message-bubble image_message">
+                                <a href="` + value.message + `"  target="_blank">
+                            <img src="` + value.message + `">
+                                </a>
+                               
+                                    <div class="message-time"> ` + time + ` </div>
+                            </div>
+                        </div>`;
+                    }else {
+                        data = data + `<div class="message received">
                             <div class="message-bubble">
                                 ` + value.message + `
                                     <div class="message-time"> ` + time + ` </div>
                             </div>
                         </div>`;
+                    }
+
                 })
                 $('.chat_user_box_messages').html(data)
             } else {
@@ -87,16 +112,27 @@ jQuery(document).ready(function ($) {
 
     function check_message(data) {
         var chatBox = $('.chat_user_box_messages');
-        if (data.type === 'new_message') {
-            let time = toShamsi(Date.now() / 1000)
+        let time = toShamsi(Date.now() / 1000)
+        if (data.message_type === 'image') {
+            chatBox.append(`<div class="message received">
+                            <div class="message-bubble image_message">
+                                <a href="` + data.message + `" target="_blank">
+                            <img src="` + data.message + `">
+                                </a>
+                                    <div class="message-time"> ` + time + ` </div>
+                            </div>
+                        </div>`)
+
+            chatBox.scrollTop(chatBox[0].scrollHeight);
+        }else {
             chatBox.append(`<div class="message received">
                             <div class="message-bubble">
                                 ` + data.message + `
                                     <div class="message-time"> ` + time + ` </div>
                             </div>
                         </div>`)
-            chatBox.scrollTop(chatBox[0].scrollHeight);
         }
+        chatBox.scrollTop(chatBox[0].scrollHeight);
     }
 
     function connect_io(idClient) {

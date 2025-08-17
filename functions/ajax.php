@@ -144,6 +144,7 @@ function get_messages_chat()
 function send_messages_to_chat()
 {
 
+    $type = $_POST['type'];
     $message = $_POST['message'];
     $chat_id = $_POST['chat_id'];
     $token = $_COOKIE['dpchat_token'];
@@ -158,7 +159,7 @@ function send_messages_to_chat()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token. '&message=' . $message,
+        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token. '&message=' . $message. '&type=' . $type,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
