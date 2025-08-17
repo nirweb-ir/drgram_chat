@@ -7,38 +7,13 @@
 
 <div class="section_show_message_container">
 
-    <div class="section_show_message_header">
 
-        <div class=" section_show_message_header_icon_menu section_show_message_header_item active ">
-            <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 12H8.00901M12.0045 12H12.0135M15.991 12H16" stroke="#1C274C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z" stroke="#1C274C" stroke-width="1.5"/>
-            </svg>
-            <p> نمایش گفتوگوها </p>
-        </div>
-
-        <div class=" section_show_message_header_icon_seting section_show_message_header_item ">
-            <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z" stroke="#292D32" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M15.5699 18.5001V14.6001" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M15.5699 7.45V5.5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M15.57 12.65C17.0059 12.65 18.17 11.4859 18.17 10.05C18.17 8.61401 17.0059 7.44995 15.57 7.44995C14.134 7.44995 12.97 8.61401 12.97 10.05C12.97 11.4859 14.134 12.65 15.57 12.65Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8.43005 18.5V16.55" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8.43005 9.4V5.5" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M8.42996 16.5501C9.8659 16.5501 11.03 15.386 11.03 13.9501C11.03 12.5142 9.8659 11.3501 8.42996 11.3501C6.99402 11.3501 5.82996 12.5142 5.82996 13.9501C5.82996 15.386 6.99402 16.5501 8.42996 16.5501Z" stroke="#292D32" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <p> تنظیمات </p>
-        </div>  <!-- active -->
-
-    </div>
 
     <div class="section_show_message">
 
         <div class=" chat-area ">
 
-            <?php
-                func_header_pv( "f" , "علی پارسا" );
-            ?>
+
 
             <div class="messages-container" id="messagesContainer">
 
@@ -46,60 +21,34 @@
                     <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 9H17M7 13H12M21 20L17.6757 18.3378C17.4237 18.2118 17.2977 18.1488 17.1656 18.1044C17.0484 18.065 16.9277 18.0365 16.8052 18.0193C16.6672 18 16.5263 18 16.2446 18H6.2C5.07989 18 4.51984 18 4.09202 17.782C3.71569 17.5903 3.40973 17.2843 3.21799 16.908C3 16.4802 3 15.9201 3 14.8V7.2C3 6.07989 3 5.51984 3.21799 5.09202C3.40973 4.71569 3.71569 4.40973 4.09202 4.21799C4.51984 4 5.0799 4 6.2 4H17.8C18.9201 4 19.4802 4 19.908 4.21799C20.2843 4.40973 20.5903 4.71569 20.782 5.09202C21 5.51984 21 6.0799 21 7.2V20Z" stroke="#9e9e9e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <p> دیباگرام .... </p>
+                    <p> دکتر گرام .... </p>
                 </div>
 
-                <?php
-//                 show_image("");
-//                 show_image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgnb3288Ih_3BYFuAdq1_eMWEVGN8TQliJKeIEeVn9XmCtXj5CCSte1fv5EwjJMnSu2hE&usqp=CAU");
-                 func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
-                 func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
-                 func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
-                 func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
-                ?>
+                <div class="chat_user_box">
+                    <?php
+                    func_header_pv( "f" , "علی پارسا" );
+                    ?>
+                    <div class="chat_user_box_messages">
+                        <?php
+                        show_image("");
+                        show_image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgnb3288Ih_3BYFuAdq1_eMWEVGN8TQliJKeIEeVn9XmCtXj5CCSte1fv5EwjJMnSu2hE&usqp=CAU");
+                        func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
+                        func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
+                        func_message( "received" , "سلام، حالت چطوره؟" , "20:30" );
+                        func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
+                        func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
+                        func_message( "send" , "سلام، حالت چطوره؟" , "20:30" );
+                        ?>
+                    </div>
+                    <?php
+                    include "./template/chat/show_text/box_input.php";
+                    ?>
+                </div>
+
 
             </div>
 
-            <div class="input-area hiden ">
 
-                <!-- باتن ارسال پیام -->
-                <button class="send-button" id="sendButton"> ➤ </button>
-
-                <!-- باتن اتخاب عکس -->
-
-                <form id="uploadForm" enctype="multipart/form-data" style="text-align:center;">
-                    <button type="button" id="selectButton">
-                        <svg class="icon_send_message" width="161" height="162" viewBox="0 0 161 162" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M95.6001 24.7705H151.208C153.899 24.7705 156.314 25.873 158.059 27.6316C159.818 29.3903 160.92 31.8315 160.92 34.4826V151.762C160.92 154.453 159.818 156.868 158.059 158.613C156.3 160.372 153.859 161.474 151.208 161.474H33.1149C30.4243 161.474 28.0095 160.372 26.2639 158.613C24.5052 156.854 23.4028 154.413 23.4028 151.762V93.9886C26.6445 95.301 30.0306 96.3247 33.5348 96.9941V123.61H33.5742C50.4916 107.428 61.6998 99.4352 78.5253 85.7727C78.5909 85.8383 78.6565 85.904 78.7221 85.9696C78.7615 86.009 78.7615 86.0483 78.8009 86.0483L114.001 127.692L119.382 94.5661C119.749 92.4399 121.744 90.9831 123.87 91.3506C124.684 91.4687 125.419 91.8756 125.996 92.4137L150.696 118.361V36.8319C150.696 36.3069 150.486 35.8475 150.119 35.5325C149.791 35.2044 149.305 34.9551 148.82 34.9551H98.1725C97.6344 31.4377 96.7682 28.0385 95.6001 24.7705ZM44.0212 0.20166C67.7895 0.20166 87.0561 19.4683 87.0561 43.2366C87.0561 67.0048 67.7895 86.2715 44.0212 86.2715C20.2529 86.2715 0.986328 67.0048 0.986328 43.2366C0.986328 19.4683 20.2529 0.20166 44.0212 0.20166ZM21.1585 43.9978H35.6479V64.6818H51.9877V43.9978H66.8971L44.0343 21.7782L21.1585 43.9978ZM124.71 47.0033C128.582 47.0033 132.138 48.5913 134.658 51.1243C137.231 53.6967 138.779 57.2009 138.779 61.0857C138.779 64.9574 137.191 68.5141 134.658 71.034C132.086 73.6064 128.582 75.1551 124.71 75.1551C120.838 75.1551 117.282 73.567 114.749 71.034C112.176 68.4616 110.628 64.9574 110.628 61.0857C110.628 57.214 112.216 53.6705 114.749 51.1243C117.334 48.5519 120.838 47.0033 124.71 47.0033Z" fill="white"/>
-                        </svg>
-                    </button>
-                    <input type="file" id="image" name="image" accept=".png,.jpg,.jpeg,.gif" required style="display:none" />
-                </form>
-
-
-                <textarea class="message-input" id="messageInput" placeholder="پیام خود را بنویسید..." rows="1"></textarea>
-
-                <script>
-                    const messageInput = document.getElementById("messageInput");
-                    messageInput.addEventListener("input", () => {
-                        // تنظیم ارتفاع
-                        messageInput.style.height = "auto";
-                        messageInput.style.height = messageInput.scrollHeight + "px";
-
-                        // تنظیم عرض بر اساس طولانی‌ترین خط
-                        const lines = messageInput.value.split("\n");
-                        const longest = lines.reduce((a, b) => a.length > b.length ? a : b, "");
-                        const span = document.createElement("span");
-                        span.style.visibility = "hidden";
-                        span.style.whiteSpace = "pre";
-                        span.style.font = getComputedStyle(messageInput).font;
-                        span.textContent = longest || " ";
-                        document.body.appendChild(span);
-                        messageInput.style.width = span.offsetWidth + 40 + "px"; // 40 برای padding دو طرف
-                        span.remove();
-                    });
-                </script>
-            </div>
 
         </div>  <!-- active -->
         <!------------------------------------------------>

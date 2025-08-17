@@ -49,13 +49,19 @@ jQuery(document).ready(function ($) {
         }
     })
 
+    $("body").on("click",'.chat-item', function () {
 
-    $(".chat-item").on("click", function () {
 
         if ( $(".sidebar").hasClass("show") ) {
             $(this).find("p").html("نمایش گفتوگو ها");
             $(".sidebar").removeClass("show");
         }
+        let user_name = $(this).find('.chat-name').text()
+        let chat_id = $(this).attr('data-chat')
+        $('.chat-header-info h3').text(user_name)
+
+        $('.chat_user_box').addClass('active')
+        get_messages_chat(chat_id)
 
     })
 

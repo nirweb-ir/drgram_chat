@@ -2,21 +2,25 @@
 include "./header.php";
 
 
-echo "<div class='container'>";
-echo "<div class='screen_black'></div>";
+include "./template/head_chat_page.php";
 
 
+?>
+    <div class='container'>
+        <div class='screen_black'></div>
+
+        <?php
 
 
-include "./template/chat/show_user.php";
+        include "./template/chat/show_user.php";
 
 
-include "./template/chat/show_text.php";
+        include "./template/chat/show_text.php";
 
 
-
-echo "</div>";
+        ?>
+    </div>
+<?php
 
 
 include "./footer.php";
-?>
