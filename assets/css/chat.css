@@ -195,6 +195,7 @@ body {
     gap: 15px;
     position: relative;
 }
+.
 
 .chat-item:hover {
     background: #f8f9fa;
@@ -224,6 +225,7 @@ body {
     min-width: 0;
 }
 
+
 .chat-name {
     font-weight: 500;
     margin-bottom: 5px;
@@ -251,8 +253,12 @@ body {
     color: #999;
 }
 
-.unread-badge {
-    background: #4a90e2;
+.chat-item .new_message {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5px;
+    background: #d31515;
     color: white;
     border-radius: 50%;
     width: 20px;

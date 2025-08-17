@@ -172,10 +172,17 @@ jQuery(document).ready(function ($) {
                         if (value.last_message !== null) {
                             message = value.last_message
                         }
+                        if (value.last_message_type === 'image'){
+                            message ='فایل رسانه'
+                        }
+                        let new_m = '';
+                        if (value.unread_count > 0){
+                            new_m = '<span class="new_message">'+value.unread_count+'</span>'
+                        }
                         if (value.conversation_status === 'new') {
 
                             data_new = data_new + `<div class="chat-item " data-chat="` + value.conversation_id + `">
-                        
+                        `+new_m+`
                                 <div class="chat-avatar">
                                     <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"/>
@@ -184,6 +191,7 @@ jQuery(document).ready(function ($) {
                                     </svg>
                                 </div>
                                 <div class="chat-info">
+                                
                                     <div class="chat-name">` + value.other_display_name + `</div>
                                     <div class="chat-last-message">` + message + `</div>
                                 </div>
@@ -194,7 +202,7 @@ jQuery(document).ready(function ($) {
                         } else {
                             {
                                 data = data + `<div class="chat-item " data-chat="` + value.conversation_id + `">
-                        
+                        `+new_m+`
                                 <div class="chat-avatar">
                                     <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <circle cx="12" cy="9" r="3" stroke="#1C274C" stroke-width="1.5"/>
@@ -203,6 +211,7 @@ jQuery(document).ready(function ($) {
                                     </svg>
                                 </div>
                                 <div class="chat-info">
+                                
                                     <div class="chat-name">` + value.other_display_name + `</div>
                                     <div class="chat-last-message">` + message + `</div>
                                 </div>
