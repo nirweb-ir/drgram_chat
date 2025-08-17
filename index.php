@@ -26,7 +26,10 @@ if ( isset($_GET['code']) && isset($_GET['state'])) {
 
     curl_close($curl);
     $response = json_decode($response, true);
-    echo json_encode($response);
+    header("Location: 'https://drgram.darkube.app/?id_client=" . $response['user_id']);
+    die();
+//    exit();
+//    echo json_encode($response);
 }
 include "./header.php";
 
