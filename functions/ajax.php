@@ -80,7 +80,7 @@ function check_user_id()
                 'domain' => '',            // اگر نیاز به دامنه خاص دارید، اینجا بگذارید
                 'secure' => true,          // فقط روی HTTPS
                 'httponly' => true,        // غیرقابل دسترسی از جاوااسکریپت
-                'samesite' => 'Strict'     // جلوگیری از CSRF، می‌توانید 'Lax' هم استفاده کنید
+                'samesite' => 'None'     // جلوگیری از CSRF، می‌توانید 'Lax' هم استفاده کنید
             ]
         );
         setcookie(
