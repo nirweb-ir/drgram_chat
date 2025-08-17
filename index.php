@@ -16,7 +16,7 @@ if ( isset($_GET['code']) && isset($_GET['state'])) {
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'book_id=' . $book_id. '&token=' . $code .'&redirect_uri=' . 'https://drgram.darkube.app/',
+        CURLOPT_POSTFIELDS => 'book_id=' . $book_id. '&code=' . $code .'&redirect_uri=' . 'https://drgram.darkube.app/',
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
