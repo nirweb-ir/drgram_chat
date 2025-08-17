@@ -1,8 +1,6 @@
 <?php
 
-if (isset($_GET['book_id'])){
-    require_once 'auth.php';
-}
+
 if ( isset($_GET['code']) && isset($_GET['state'])) {
 
     $code = $_GET['code'];
