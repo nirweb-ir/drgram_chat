@@ -32,8 +32,9 @@ if ( isset($_GET['code']) && isset($_GET['state'])) {
 // ریدایرکت
     header("Location: $url");
     exit();
-//    exit();
-//    echo json_encode($response);
+
+}elseif ( isset($_GET['code']) && !isset($_GET['state'])){
+    include 'doctor.php';
 }
 include "./header.php";
 
