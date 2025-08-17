@@ -12,9 +12,12 @@ jQuery(document).ready(function ($) {
 
         $(".chat_list_awaiting_answer").removeClass("active");
         $(".chat_list_answered_chats").removeClass("active");
+        $(".chat_list_finished_chats").removeClass("active");
 
-        if ( status == "waiting" ) {
+        if (status == "waiting") {
             $(".chat_list_awaiting_answer").addClass("active");
+        } else if (status == "finish") {
+            $(".chat_list_finished_chats").addClass("active");
         } else {
             $(".chat_list_answered_chats").addClass("active");
         }
@@ -28,7 +31,7 @@ jQuery(document).ready(function ($) {
 
         if (window.innerWidth > 768) {
 
-            if ( $(".sidebar").hasClass("active") ) {
+            if ($(".sidebar").hasClass("active")) {
                 $(this).find("p").html("نمایش گفتوگو ها");
                 $(".sidebar").removeClass("active");
             } else {
@@ -36,10 +39,9 @@ jQuery(document).ready(function ($) {
                 $(".sidebar").addClass("active");
             }
 
-        }
-        else {
+        } else {
 
-            if ( $(".sidebar").hasClass("show") ) {
+            if ($(".sidebar").hasClass("show")) {
                 $(this).find("p").html("نمایش گفتوگو ها");
                 $(".sidebar").removeClass("show");
             } else {
@@ -49,33 +51,60 @@ jQuery(document).ready(function ($) {
         }
     })
 
-    $("body").on("click",'.chat-item', function () {
+    $("body").on("click", '.chat-item', function () {
+        $('.chat-item').removeClass('hide')
+        $(this).addClass('active')
 
-        if ( $(".sidebar").hasClass("show") ) {
+        var chatBox = $('.chat_user_box_messages');
+        if ($(".sidebar").hasClass("show")) {
             $(this).find("p").html("نمایش گفتوگو ها");
             $(".sidebar").removeClass("show");
         }
         let user_name = $(this).find('.chat-name').text()
+        $(this).find('.new_message').remove()
         let chat_id = $(this).attr('data-chat')
+        let status = $(this).attr('status')
         $('.chat-header-info h3').text(user_name)
+        if (status === 'finished') {
+            $('.input-area').addClass('hide')
+            $('.box_input_finished ').removeClass('hide')
+        } else {
+            $('.input-area ').removeClass('hide')
+            $('.box_input_finished').addClass('hide')
+        }
 
         $('.chat_user_box').addClass('active')
         $('#chat_id_input').val(chat_id)
         get_messages_chat(chat_id)
-
+        setTimeout(function () {
+            chatBox.scrollTop(chatBox[0].scrollHeight);
+        }, '1000')
     })
 
-
-    $('body').on('click','#sendButton',function (){
-
+    function send(){
+        var item_active = $('.chat-item.active')
+        let status = item_active.attr('status')
+        if (status === 'new'){
+            $('.chat-item.active').remove()
+            $('.chat_list_answered_chats').prepend(item_active)
+            $('.chat_list_answered_chats').find('.chat_list_empty').remove()
+        }
         let chat_id = $('#chat_id_input').val()
         let message = $('#messageInput').val()
-        send_messages_chat(chat_id,message)
+        send_messages_chat(chat_id, message)
         $('#messageInput').val('')
+    }
+    $('body').on('click', '#sendButton', function () {
+        send()
     })
-
-
-
+    $('#messageInput').keydown(function(e) {
+        if (e.key === "Enter") {
+            if (!e.shiftKey) {
+                e.preventDefault(); // جلوگیری از رفتن به خط بعد
+                send()
+            }
+        }
+    });
 
 
 })

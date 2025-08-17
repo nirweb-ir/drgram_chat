@@ -91,3 +91,8 @@
         });
     </script>
 </div>
+<div class="box_input_finished hide">
+    <p>
+        این گفتگو پایان یافته است
+    </p>
+</div>
