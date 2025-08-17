@@ -51,7 +51,6 @@ jQuery(document).ready(function ($) {
 
     $("body").on("click",'.chat-item', function () {
 
-
         if ( $(".sidebar").hasClass("show") ) {
             $(this).find("p").html("نمایش گفتوگو ها");
             $(".sidebar").removeClass("show");
@@ -61,8 +60,18 @@ jQuery(document).ready(function ($) {
         $('.chat-header-info h3').text(user_name)
 
         $('.chat_user_box').addClass('active')
+        $('#chat_id_input').val(chat_id)
         get_messages_chat(chat_id)
 
+    })
+
+
+    $('body').on('click','#sendButton',function (){
+
+        let chat_id = $('#chat_id_input').val()
+        let message = $('#messageInput').val()
+        send_messages_chat(chat_id,message)
+        $('#messageInput').val('')
     })
 
 

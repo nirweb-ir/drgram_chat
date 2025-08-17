@@ -19,6 +19,9 @@ switch ($action) {
     case 'get_list_chats':
         get_list_chats();
         break;
+    case 'send_messages_to_chat':
+        send_messages_to_chat();
+        break;
 
     case 'get_messages_chat':
         get_messages_chat();
@@ -35,8 +38,8 @@ switch ($action) {
 // -------------------------
 function check_user_id()
 {
-
-$id_client = $_POST['id_client'];
+    $token = $_COOKIE['dpchat_token'] ?? '';
+    $id_client = $_POST['id_client'];
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -48,7 +51,7 @@ $id_client = $_POST['id_client'];
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'user_id='.$id_client,
+        CURLOPT_POSTFIELDS => 'user_id=' . $id_client.'&token='.$token,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
@@ -58,14 +61,32 @@ $id_client = $_POST['id_client'];
 
     curl_close($curl);
     $response = json_decode($response, true);
+    if ($response['status'] === 'success') {
+        $token = $response['token'];
+        $expiry_time = time() + (14 * 24 * 60 * 60);
+
+        setcookie(
+            'dpchat_token',
+            $token,
+            [
+                'expires' => $expiry_time,
+                'path' => '/',             // قابل دسترسی در کل دامنه
+                'domain' => '',            // اگر نیاز به دامنه خاص دارید، اینجا بگذارید
+                'secure' => true,          // فقط روی HTTPS
+                'httponly' => true,        // غیرقابل دسترسی از جاوااسکریپت
+                'samesite' => 'Strict'     // جلوگیری از CSRF، می‌توانید 'Lax' هم استفاده کنید
+            ]
+        );
+    }
     echo json_encode($response);
 
-
+    exit();
 }
+
 function get_list_chats()
 {
 
-$user_id = $_POST['user_id'];
+    $token = $_COOKIE['dpchat_token'];
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -77,7 +98,7 @@ $user_id = $_POST['user_id'];
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'user_id='.$user_id.'&role=doctor',
+        CURLOPT_POSTFIELDS => 'token=' . $token ,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
@@ -90,10 +111,12 @@ $user_id = $_POST['user_id'];
     echo json_encode($response);
 
 }
+
 function get_messages_chat()
 {
 
-$chat_id = $_POST['chat_id'];
+    $chat_id = $_POST['chat_id'];
+    $token = $_COOKIE['dpchat_token'];
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -105,7 +128,37 @@ $chat_id = $_POST['chat_id'];
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'chat_id='.$chat_id,
+        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded'
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    $response = json_decode($response, true);
+    echo json_encode($response);
+
+}
+function send_messages_to_chat()
+{
+
+    $message = $_POST['message'];
+    $chat_id = $_POST['chat_id'];
+    $token = $_COOKIE['dpchat_token'];
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/send_message',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token. '&message=' . $message,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
