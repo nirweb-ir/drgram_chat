@@ -26,8 +26,12 @@ if ( isset($_GET['code']) && isset($_GET['state'])) {
 
     curl_close($curl);
     $response = json_decode($response, true);
-    header("Location: 'https://drgram.darkube.app/?id_client=" . $response['user_id']);
-    die();
+    $user_id = $response['user_id'];
+    $url = "https://drgram.darkube.app/?id_client=" . urlencode($user_id);
+
+// ریدایرکت
+    header("Location: $url");
+    exit();
 //    exit();
 //    echo json_encode($response);
 }
