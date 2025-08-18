@@ -1,11 +1,11 @@
 <?php
 include "./template/chat/show_user/user_pv.php";
 ?>
-
+<div class="sidebar_back"></div>
 
 <div class=" section_show_pv_container active ">  <!-- active -->
 
-    <div class=" section_show_pv sidebar menu_show_cart_pv show active " id="sidebar">
+    <div class=" section_show_pv sidebar menu_show_cart_pv" id="sidebar">
 
         <div class="filter_top_pv">
 

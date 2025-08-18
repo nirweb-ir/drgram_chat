@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+ jQuery(document).ready(function ($) {
 
 
     // -------------------------------------------
@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
     $(".section_show_message_header_icon_menu").on("click", function () {
 
         if (window.innerWidth > 768) {
-
+            $(".sidebar").addClass("active")
             if ($(".sidebar").hasClass("active")) {
                 $(this).find("p").html("نمایش گفتوگو ها");
                 $(".sidebar").removeClass("active");
@@ -41,15 +41,18 @@ jQuery(document).ready(function ($) {
 
         } else {
 
-            if ($(".sidebar").hasClass("show")) {
-                $(this).find("p").html("نمایش گفتوگو ها");
-                $(".sidebar").removeClass("show");
-            } else {
-                $(this).find("p").html("پنهان کردن گفتوگو ها");
-                $(".sidebar").addClass("show");
-            }
+            $(".sidebar").addClass("active")
+            $(".sidebar_back").show()
         }
     })
+     $(".sidebar_back").click(function (){
+         $(".sidebar").removeClass("active")
+         $(".sidebar_back").hide()
+     })
+
+     $('.sidebar_back').click(function (){
+
+     })
 
     $("body").on("click", '.chat-item', function () {
         $('.chat-item').removeClass('hide')

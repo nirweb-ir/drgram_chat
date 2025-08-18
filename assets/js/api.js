@@ -229,8 +229,8 @@ function get_list_chats(user_id) {
         data: { action: "get_list_chats", user_id },
         dataType: "json",
         success: function (response) {
-            console.log(response);
-            if (response) {
+
+            if (response && response[0].conversation_status) {
                 let data_new = '';
                 let data_finish = '';
                 let data = '';

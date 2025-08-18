@@ -20,24 +20,25 @@
     <textarea class="message-input" id="messageInput" placeholder="پیام خود را بنویسید..." rows="1"></textarea>
 
     <script>
-        // const messageInput = document.getElementById("messageInput");
-        // messageInput.addEventListener("input", () => {
-        //     // تنظیم ارتفاع
-        //     messageInput.style.height = "auto";
-        //     messageInput.style.height = messageInput.scrollHeight + "px";
-        //
-        //     // تنظیم عرض بر اساس طولانی‌ترین خط
-        //     const lines = messageInput.value.split("\n");
-        //     const longest = lines.reduce((a, b) => a.length > b.length ? a : b, "");
-        //     const span = document.createElement("span");
-        //     span.style.visibility = "hidden";
-        //     span.style.whiteSpace = "pre";
-        //     span.style.font = getComputedStyle(messageInput).font;
-        //     span.textContent = longest || " ";
-        //     document.body.appendChild(span);
-        //     messageInput.style.width = span.offsetWidth + 40 + "px"; // 40 برای padding دو طرف
-        //     span.remove();
-        // });
+        const textarea = document.getElementById("messageInput");
+
+        textarea.addEventListener("input", function() {
+            this.style.height = "auto"; // ریست ارتفاع
+
+            // ارتفاع واقعی محتوای داخل
+            let newHeight = this.scrollHeight;
+
+            // حداکثر ارتفاع مجاز
+            const maxHeight = parseInt(window.getComputedStyle(this).maxHeight);
+
+            if (newHeight > maxHeight) {
+                this.style.height = maxHeight + "px";
+                this.style.overflowY = "auto";   // اسکرول فعال شود
+            } else {
+                this.style.height = newHeight + "px";
+                this.style.overflowY = "hidden"; // تا قبل از max-height اسکرول مخفی بماند
+            }
+        });
     </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
