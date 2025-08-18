@@ -393,6 +393,8 @@ p.not_find_message {
     transform: translate(-50%, -50%);
     font-size: 15px;
     color: #888;
+    text-align: center;
+    line-height: 2em;
 }
 
 .chat_user_box_messages {

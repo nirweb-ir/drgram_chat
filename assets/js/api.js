@@ -63,7 +63,9 @@ function send_messages_chat(chat_id, message, type = 'text') {
     const chatBox = $('.chat_user_box_messages');
     const messageHTML = buildMessageHTML(message, type, 'sent');
     appendMessage(chatBox, messageHTML);
-
+    if ($('.chat_user_box_messages').find('.not_find_message')){
+        $('.chat_user_box_messages').find('.not_find_message').remove()
+    }
     $.ajax({
         url: ajaxUrl,
         type: "POST",
@@ -106,7 +108,11 @@ function get_messages_chat(chat_id) {
                 });
                 chatBox.html(html);
             } else {
-                chatBox.html("<p class='not_find_message'>پیامی یافت نشد!</p>");
+                let start_time = $('.chat_item_'+chat_id).attr('start-time')
+                let end_time = $('.chat_item_'+chat_id).attr('end-time')
+                start_time = toShamsi(start_time)
+                end_time = toShamsi(end_time)
+                chatBox.html(`<p class='not_find_message'>پیام خود را بنویسید <br> زمان پاسخ گویی بین ${start_time} تا ${end_time} است </p>`);
             }
         },
         error: function (xhr, status, error) {
@@ -125,8 +131,12 @@ function check_message(data) {
 
     if (chatId === currentChatId) {
         const msgHTML = buildMessageHTML(data.message, data.message_type, 'received');
+
+        if ($('.chat_user_box_messages').find('.not_find_message')){
+            $('.chat_user_box_messages').find('.not_find_message').remove()
+        }
         appendMessage(chatBox, msgHTML);
-        console.log(data)
+
         seen_message(data.message_id)
     } else {
         const item = $('.chat_item_' + chatId);
@@ -194,7 +204,8 @@ function buildChatItemHTML(value) {
     let new_m = value.unread_count > 0 ? `<span class="new_message">${value.unread_count}</span>` : '';
 
     return `
-        <div class="chat-item chat_item_${value.conversation_id}" data-chat="${value.conversation_id}" status="${value.conversation_status}">
+        <div class="chat-item chat_item_${value.conversation_id}" data-chat="${value.conversation_id}" status="${value.conversation_status}"
+        start-time="${value.book_start_time}" end-time="${value.book_end_time}">
             ${new_m}
             <div class="chat-avatar">
                 <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

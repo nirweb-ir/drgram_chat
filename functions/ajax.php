@@ -70,7 +70,8 @@ function check_user_id()
         $token = $response['token'];
         $user_id = $response['user_id'];
         $expiry_time = time() + (14 * 24 * 60 * 60);
-
+        setcookie("dpchat_token", "", time() - 3600, "/");
+        setcookie("dpchat_id", "", time() - 3600, "/");
         setcookie(
             'dpchat_token',
             $token,
