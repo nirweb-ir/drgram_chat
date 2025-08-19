@@ -110,7 +110,6 @@ body {
 }
 
 
-
 .sidebar-header {
     padding: 20px;
     background: #4a90e2;
@@ -302,7 +301,7 @@ body {
 
 .chat-header {
     background: white;
-    padding: 15px;
+    padding: 13px;
     border-bottom: 1px solid #e5e5e5;
     display: flex;
     align-items: center;
@@ -311,7 +310,7 @@ body {
     justify-content: space-between;
     border-radius: 6px 6px 0 0;
     height: 8%;
-    min-height: 70px;
+    min-height: 64px;
 }
 
 .chat-header_container {
@@ -349,7 +348,7 @@ body {
     padding-top: 5px;
     margin-right: 10px;
     font-weight: 500;
-    font-size: 18px;
+    font-size: 17px;
 }
 
 .show_ather_chat svg {
@@ -368,8 +367,8 @@ body {
     position: relative;
     flex: 1;
     overflow-y: auto;
-    height: calc(100vh - 90px);
-    height: calc(100dvh - 90px);
+    height: calc(100vh - 60px);
+    height: calc(100dvh - 60px);
 }
 
 .chat_user_box {
@@ -467,13 +466,13 @@ p.not_find_message {
 /* Input Area */
 .input-area {
     background: white;
-    padding: 15px;
+    padding: 5px 14px;
     border-top: 1px solid #e5e5e5;
     display: flex;
     align-items: center;
     gap: 15px;
     height: max-content;
-    min-height: 80px;
+    min-height: 72px;
     max-height: 180px;
 }
 
@@ -530,11 +529,11 @@ p.not_find_message {
 .message-input {
     flex: 1;
     border: 1px solid #ddd;
-    border-radius: 25px;
+    border-radius: 8px;
     font-size: 14px;
     outline: none;
     min-height: 47px;
-    max-height: 130px;
+    max-height: 100%;
     resize: none;
     padding: 10px;
     box-sizing: border-box;
@@ -542,8 +541,8 @@ p.not_find_message {
 }
 
 .send-button {
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     border: none;
     border-radius: 50%;
     background: #4a90e2;
@@ -593,7 +592,8 @@ p.not_find_message {
     background: rgba(0, 0, 0, 0.5);
     z-index: 99;
 }
-.sidebar_back{
+
+.sidebar_back {
     display: none;
 }
 
@@ -1273,7 +1273,7 @@ p.not_find_message {
         display: block;
     }
 
-    .sidebar_back{
+    .sidebar_back {
         display: none;
         position: fixed;
         right: 0;
@@ -1284,6 +1284,7 @@ p.not_find_message {
         background: #33333340;
         backdrop-filter: blur(5px);
     }
+
     .sidebar {
         position: fixed;
         top: 0;
@@ -1303,7 +1304,7 @@ p.not_find_message {
         transform: translateX(0);
     }
 
-    .filter_top_pv{
+    .filter_top_pv {
         margin-top: 10px !important;
     }
 
@@ -1323,13 +1324,12 @@ p.not_find_message {
         display: block;
     }
 
-
     .message-bubble {
         max-width: 85%;
     }
 
     .input-area {
-        padding: 10px 15px;
+        /* padding: 10px 15px; */
     }
 
     .chat-header {
@@ -1340,11 +1340,14 @@ p.not_find_message {
     .show_ather_chat svg {
         display: block;
     }
+    .section_show_message{
+        padding: 0;
+    }
 
 }
 
 @media (max-width: 480px) {
-    
+
 
     .message-bubble {
         max-width: 90%;

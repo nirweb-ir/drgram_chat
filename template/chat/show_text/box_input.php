@@ -20,26 +20,36 @@
     <textarea class="message-input" id="messageInput" placeholder="پیام خود را بنویسید..." rows="1"></textarea>
 
     <script>
-        const textarea = document.getElementById("messageInput");
+        jQuery(document).ready(function ($) {
+            $("#messageInput").on("input", function () {
+                let $this = $(this);
+                let parent = $(this).parent('.input-area');
 
-        textarea.addEventListener("input", function() {
-            this.style.height = "auto"; // ریست ارتفاع
+                // ریست ارتفاع
+                $this.css("height", "auto");
 
-            // ارتفاع واقعی محتوای داخل
-            let newHeight = this.scrollHeight;
+                // ارتفاع واقعی محتوای داخل
+                let newHeight = this.scrollHeight;
 
-            // حداکثر ارتفاع مجاز
-            const maxHeight = parseInt(window.getComputedStyle(this).maxHeight);
+                // حداکثر ارتفاع مجاز
+                // let maxHeight = parseInt($this.css("max-height"));
+                let maxHeight = parseInt(parent.css("max-height"));
 
-            if (newHeight > maxHeight) {
-                this.style.height = maxHeight + "px";
-                this.style.overflowY = "auto";   // اسکرول فعال شود
-            } else {
-                this.style.height = newHeight + "px";
-                this.style.overflowY = "hidden"; // تا قبل از max-height اسکرول مخفی بماند
-            }
+                if (newHeight > maxHeight) {
+                    $this.css({
+                        "height": maxHeight + "px",
+                        "overflow-y": "auto"
+                    });
+                } else {
+                    $this.css({
+                        "height": newHeight + "px",
+                        "overflow-y": "hidden"
+                    });
+                }
+            });
         });
     </script>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
