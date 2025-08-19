@@ -25,12 +25,21 @@ function truncateText(text, maxLength = 20) {
 // -------------------------
 // ساخت HTML پیام
 // -------------------------
-function buildMessageHTML(message, type, senderClass = 'sent', timestamp = null) {
+let svg_check_send = `<span class="svg_check_send"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></span>`
+let svg_check_seen = `<span class="svg_check_seen"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></span>`
+function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = null ,seen = false) {
     const time = timestamp || toShamsi(Date.now() / 1000);
     let safeMessage = message.replace(/\n/g, "<br>");
+    let svg_check = ''
+    if (senderClass === 'sent'){
+        svg_check = svg_check_send
+        if (seen){
+            svg_check += svg_check_seen
+        }
+    }
     if (type === 'image') {
         return `
-        <div class="message ${senderClass}">
+        <div class="message ${senderClass}" id="message_${id}">
             <div class="message-bubble image_message">
                 <a href="${message}" target="_blank">
                     <img src="${message}">
@@ -40,11 +49,12 @@ function buildMessageHTML(message, type, senderClass = 'sent', timestamp = null)
         </div>`;
     } else {
         return `
-        <div class="message ${senderClass}">
+        <div class="message ${senderClass}" id="message_${id}">
             <div class="message-bubble">
                 ${safeMessage}
                 <div class="message-time">${time}</div>
             </div>
+            ${svg_check}
         </div>`;
     }
 }
@@ -62,9 +72,10 @@ function appendMessage(chatBox, messageHTML) {
 // -------------------------
 function send_messages_chat(chat_id, message, type = 'text') {
     const chatBox = $('.chat_user_box_messages');
-    const messageHTML = buildMessageHTML(message, type, 'sent');
+    let id =  Date.now()
+    const messageHTML = buildMessageHTML(id,message, type, 'sent');
     appendMessage(chatBox, messageHTML);
-    if ($('.chat_user_box_messages').find('.not_find_message')){
+    if ($('.chat_user_box_messages').find('.not_find_message').length){
         $('.chat_user_box_messages').find('.not_find_message').remove()
     }
     $.ajax({
@@ -73,9 +84,10 @@ function send_messages_chat(chat_id, message, type = 'text') {
         data: { action: "send_messages_to_chat", chat_id, message, type },
         dataType: "json",
         success: function (response) {
-            console.log(response);
+            console.log(response)
             if (response) {
-                // می‌تونی اینجا لاجیک اضافه کنی
+
+                $('#message_'+id).attr('id','message_'+response.id)
             } else {
                 // حالت دیگه
             }
@@ -104,8 +116,9 @@ function get_messages_chat(chat_id) {
                 let html = '';
                 response.forEach(msg => {
                     const senderClass = Number(get_id()) === Number(msg.sender_id) ? 'sent' : 'received';
+
                     const timestamp = new Date(msg.created_at).getTime() / 1000;
-                    html += buildMessageHTML(msg.message, msg.type, senderClass, toShamsi(timestamp));
+                    html += buildMessageHTML(msg.id,msg.message, msg.type, senderClass, toShamsi(timestamp),msg.is_read);
                 });
                 chatBox.html(html);
             } else {
@@ -129,16 +142,16 @@ function check_message(data) {
     const chatBox = $('.chat_user_box_messages');
     const currentChatId = Number($('#chat_id_input').val());
     const chatId = Number(data.chat_id);
-
+    console.log(data)
     if (chatId === currentChatId) {
-        const msgHTML = buildMessageHTML(data.message, data.message_type, 'received');
+        const msgHTML = buildMessageHTML(data.message_id,data.message, data.message_type, 'received');
 
         if ($('.chat_user_box_messages').find('.not_find_message')){
             $('.chat_user_box_messages').find('.not_find_message').remove()
         }
         appendMessage(chatBox, msgHTML);
-
-        seen_message(data.message_id)
+        console.log(222)
+        seen_message(data.message_id,data.chat_id)
     } else {
         const item = $('.chat_item_' + chatId);
         if (item.find('.new_message').length) {
@@ -153,20 +166,18 @@ function check_message(data) {
 // -------------------------
 // بررسی پیام جدید
 // -------------------------
-function seen_message(message_id) {
+function seen_message(message_id,chat_id) {
     if (message_id > 0) {
         $.ajax({
             url: ajaxUrl,
             type: "POST",
-            data: {action: "seen_message", message_id},
+            data: {action: "seen_message", message_id,chat_id},
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 if (response) {
 
-
                 } else {
-                    $("#response").html("<p style='color:red'>" + response.message + "</p>");
+
                 }
             },
             error: function (xhr, status, error) {
@@ -174,6 +185,18 @@ function seen_message(message_id) {
             }
         });
     }
+}
+function seen_old_message(data) {
+    let ids = data.message_id
+    const arr = ids.split('-');
+    arr.forEach(id => {
+        var message =$('#message_'+id)
+
+        if (!message.find('.svg_check_seen').length){
+            message.append(svg_check_seen)
+        }
+    });
+
 }
 
 // -------------------------
@@ -190,6 +213,9 @@ function connect_io(idClient) {
         });
         socket.on("new-message", (data) => {
             check_message(data);
+        });
+        socket.on("seen-message", (data) => {
+            seen_old_message(data);
         });
     }
 }

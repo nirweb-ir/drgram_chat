@@ -122,6 +122,25 @@
          }
      });
 
+     $(document).on('click', '.image_message img', function(e) {
+         e.preventDefault();
+         var src = $(this).attr('src');
+         $('#lightbox-img').attr('src', src);
+         $('#lightbox').fadeIn();
+     });
+
+     // بستن لایت‌باکس
+     $('#lightbox .close').click(function() {
+         $('#lightbox').fadeOut();
+     });
+
+     // بستن با کلیک روی بک‌گراند
+     $('#lightbox').click(function(e) {
+         if(e.target.id === 'lightbox') {
+             $(this).fadeOut();
+         }
+     });
+
 
 })
 

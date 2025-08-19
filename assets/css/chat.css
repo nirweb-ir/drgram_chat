@@ -367,8 +367,8 @@ body {
     position: relative;
     flex: 1;
     overflow-y: auto;
-    height: calc(100vh - 60px);
-    height: calc(100dvh - 60px);
+    height: calc(100vh - 90px);
+    height: calc(100dvh - 90px);
 }
 
 .chat_user_box {
@@ -402,7 +402,7 @@ p.not_find_message {
     padding: 20px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 82%;
+    height: 90%;
     position: relative;
 }
 
@@ -410,9 +410,13 @@ p.not_find_message {
     margin-bottom: 15px;
     display: flex;
     align-items: flex-end;
-    gap: 10px;
-
     transition: ease 0.1s All;
+}
+span.svg_check_seen {
+    margin: 0 -6px;
+}
+span.svg_check_seen svg{
+
 }
 
 .message.dont_Sin {
@@ -450,6 +454,7 @@ p.not_find_message {
     background: #4a90e2;
     color: white;
     border-bottom-right-radius: 4px;
+    margin:0 5px;
 }
 
 .message-time {
@@ -1260,6 +1265,36 @@ p.not_find_message {
     color: #363636;
     font-size: 16px;
 }
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0,0,0,0.8);
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 
 @media (max-width: 768px) {
@@ -1293,11 +1328,14 @@ p.not_find_message {
         width: 80%;
         max-width: 320px;
         z-index: 70;
-
-        /* حالت بسته */
         transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
     }
+    .messages-container{
+        height: calc(100vh - 60px);
+        height: calc(100dvh - 60px);
+    }
+
 
     .sidebar.active {
         /* حالت باز */

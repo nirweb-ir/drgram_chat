@@ -201,6 +201,7 @@ function seen_message()
 
 
     $message_id = $_POST['message_id'];
+    $chat_id = $_POST['chat_id'];
     $token = $_COOKIE['dpchat_token'];
     $curl = curl_init();
 
@@ -213,7 +214,7 @@ function seen_message()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'message_id=' . $message_id. '&token=' . $token,
+        CURLOPT_POSTFIELDS => 'message_id=' . $message_id. '&chat_id=' . $chat_id,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
