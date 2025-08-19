@@ -81,31 +81,33 @@ function appendMessage(chatBox, messageHTML) {
 // ارسال پیام
 // -------------------------
 function send_messages_chat(chat_id, message, type = 'text') {
-    const chatBox = $('.chat_user_box_messages');
-    let id =  Date.now()
-    const messageHTML = buildMessageHTML(id,message, type, 'sent');
-    appendMessage(chatBox, messageHTML);
-    if ($('.chat_user_box_messages').find('.not_find_message').length){
-        $('.chat_user_box_messages').find('.not_find_message').remove()
-    }
-    $.ajax({
-        url: ajaxUrl,
-        type: "POST",
-        data: { action: "send_messages_to_chat", chat_id, message, type },
-        dataType: "json",
-        success: function (response) {
-            console.log(response)
-            if (response) {
-
-                $('#message_'+id).attr('id','message_'+response.id)
-            } else {
-                // حالت دیگه
-            }
-        },
-        error: function (xhr, status, error) {
-            $("#response").html("<p style='color:red'>Ajax error: " + error + "</p>");
+    if(message !== '') {
+        const chatBox = $('.chat_user_box_messages');
+        let id = Date.now()
+        const messageHTML = buildMessageHTML(id, message, type, 'sent');
+        appendMessage(chatBox, messageHTML);
+        if ($('.chat_user_box_messages').find('.not_find_message').length) {
+            $('.chat_user_box_messages').find('.not_find_message').remove()
         }
-    });
+        $.ajax({
+            url: ajaxUrl,
+            type: "POST",
+            data: {action: "send_messages_to_chat", chat_id, message, type},
+            dataType: "json",
+            success: function (response) {
+                console.log(response)
+                if (response) {
+
+                    $('#message_' + id).attr('id', 'message_' + response.id)
+                } else {
+                    // حالت دیگه
+                }
+            },
+            error: function (xhr, status, error) {
+                $("#response").html("<p style='color:red'>Ajax error: " + error + "</p>");
+            }
+        });
+    }
 }
 
 // -------------------------
