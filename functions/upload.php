@@ -32,7 +32,7 @@ $year = date("Y");
 $month = date("m");
 
 // یک پوشه عقب‌تر از functions
-$uploadDir = dirname(__DIR__) . "/uploads2/$year/$month/";
+$uploadDir = dirname(__DIR__) . "/uploads/$year/$month/";
 if(!is_dir($uploadDir)){
     mkdir($uploadDir, 0777, true);
 }
@@ -49,7 +49,7 @@ if ($host == "localhost") {
 }
 
 if(move_uploaded_file($file['tmp_name'], $destPath)){
-    $relativeUrl = "uploads2/$year/$month/$newName";
+    $relativeUrl = "uploads/$year/$month/$newName";
     $url = $protocol . $host . "/" . $relativeUrl;
     echo json_encode([
         "status"=>"success",
