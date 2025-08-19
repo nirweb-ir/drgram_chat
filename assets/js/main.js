@@ -55,6 +55,8 @@
      })
 
     $("body").on("click", '.chat-item', function () {
+        $(".sidebar").removeClass("active")
+        $(".sidebar_back").hide()
         $('.chat-item').removeClass('hide')
         $(this).addClass('active')
 
@@ -94,20 +96,31 @@
         }
         let chat_id = $('#chat_id_input').val()
         let message = $('#messageInput').val()
+        console.log(message)
         send_messages_chat(chat_id, message)
         $('#messageInput').val('')
     }
     $('body').on('click', '#sendButton', function () {
         send()
     })
-    $('#messageInput').keydown(function(e) {
-        if (e.key === "Enter") {
-            if (!e.shiftKey) {
-                e.preventDefault(); // جلوگیری از رفتن به خط بعد
-                send()
-            }
-        }
-    });
+     function isMobile() {
+         return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+     }
+
+     $('#messageInput').keydown(function(e) {
+         if (e.key === "Enter") {
+             if (isMobile()) {
+                 // روی موبایل: فقط خط جدید بسازه (ارسال نکنه)
+                 return;
+             } else {
+                 // روی دسکتاپ: Enter = ارسال / Shift+Enter = خط جدید
+                 if (!e.shiftKey) {
+                     e.preventDefault(); // جلوگیری از رفتن به خط بعد
+                     send();
+                 }
+             }
+         }
+     });
 
 
 })

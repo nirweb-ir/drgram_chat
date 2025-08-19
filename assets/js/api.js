@@ -27,6 +27,7 @@ function truncateText(text, maxLength = 20) {
 // -------------------------
 function buildMessageHTML(message, type, senderClass = 'sent', timestamp = null) {
     const time = timestamp || toShamsi(Date.now() / 1000);
+    let safeMessage = message.replace(/\n/g, "<br>");
     if (type === 'image') {
         return `
         <div class="message ${senderClass}">
@@ -41,7 +42,7 @@ function buildMessageHTML(message, type, senderClass = 'sent', timestamp = null)
         return `
         <div class="message ${senderClass}">
             <div class="message-bubble">
-                ${message}
+                ${safeMessage}
                 <div class="message-time">${time}</div>
             </div>
         </div>`;

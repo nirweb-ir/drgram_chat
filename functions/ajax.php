@@ -47,6 +47,12 @@ function check_user_id()
     $id_client = $_POST['id_client'];
     $curl = curl_init();
 
+    if (!empty($id_client)) {
+        $body ='user_id=' . $id_client;
+    }else{
+        $body ='user_id=' . $id_client.'&token='.$token;
+    }
+
     curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/dpchat_check_user',
         CURLOPT_RETURNTRANSFER => true,
@@ -56,7 +62,7 @@ function check_user_id()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'user_id=' . $id_client.'&token='.$token,
+        CURLOPT_POSTFIELDS => $body,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),

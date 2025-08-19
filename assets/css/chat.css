@@ -368,7 +368,8 @@ body {
     position: relative;
     flex: 1;
     overflow-y: auto;
-
+    height: calc(100vh - 90px);
+    height: calc(100dvh - 90px);
 }
 
 .chat_user_box {
