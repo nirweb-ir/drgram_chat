@@ -238,6 +238,9 @@ function buildChatItemHTML(value) {
     if (value.last_message_type === 'image') {
         message = "فایل رسانه";
     }
+    if (value.last_message_type === 'voice') {
+        message = "فایل صوتی";
+    }
     let new_m = value.unread_count > 0 ? `<span class="new_message">${value.unread_count}</span>` : '';
 
     return `
