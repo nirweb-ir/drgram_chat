@@ -25,8 +25,8 @@ function truncateText(text, maxLength = 20) {
 // -------------------------
 // ساخت HTML پیام
 // -------------------------
-let svg_check_send = `<span class="svg_check_send"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></span>`
-let svg_check_seen = `<span class="svg_check_seen"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></span>`
+let svg_check_send = `<div class="svg_check_send"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></div>`
+let svg_check_seen = `<div class="svg_check_seen"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></div>`
 function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = null ,seen = false) {
     const time = timestamp || toShamsi(Date.now() / 1000);
     let safeMessage = message.replace(/\n/g, "<br>");
@@ -46,6 +46,16 @@ function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = 
                 </a>
                 <div class="message-time">${time}</div>
             </div>
+            ${svg_check}
+        </div>`;
+    } else if (type === 'voice') {
+        return `
+        <div class="message ${senderClass}" id="message_${id}">
+            <div class="message-bubble voice_message">
+                <audio id="player" src="${message}" controls></audio>
+                <div class="message-time">${time}</div>
+            </div>
+            ${svg_check}
         </div>`;
     } else {
         return `
@@ -312,4 +322,7 @@ jQuery(document).ready(function ($) {
             $("#response").html("<p style='color:red'>Ajax error: " + error + "</p>");
         }
     });
+
+
+
 });
