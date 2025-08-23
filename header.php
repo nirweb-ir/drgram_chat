@@ -9,10 +9,12 @@
     <script>
         const ajaxUrl = "<?php echo 'functions/ajax.php'; ?>";
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.5.6/RecordRTC.js"></script>
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/socket.io.min.js"></script>
     <script src="./assets/js/api.js?v=1.0.9"></script>
     <script src="./assets/js/main.js?v=1.0.9"></script>
+
 
 </head>
 <body>

@@ -413,10 +413,12 @@ p.not_find_message {
     transition: ease 0.1s All;
     gap: 5px;
 }
+
 .svg_check_seen {
     margin: 0 -11px;
 }
-.svg_check_seen svg{
+
+.svg_check_seen svg {
 
 }
 
@@ -444,7 +446,8 @@ p.not_find_message {
     height: auto;
     display: block;
 }
-.message-bubble audio{
+
+.message-bubble audio {
     display: block;
     max-width: 100%;
 }
@@ -486,6 +489,7 @@ p.not_find_message {
     height: max-content;
     min-height: 72px;
     max-height: 180px;
+    position: relative;
 }
 
 .input-area.hide {
@@ -538,8 +542,8 @@ p.not_find_message {
 }
 
 
-.message-input {
-    flex: 1;
+.message_input {
+    width: 100%;
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 14px;
@@ -550,32 +554,192 @@ p.not_find_message {
     padding: 10px;
     box-sizing: border-box;
     overflow-y: auto;
+    padding-left: 50px;
 }
 
-.send-button {
-    width: 42px;
-    height: 42px;
-    border: none;
-    border-radius: 50%;
+.box_message_input {
+    position: relative;
+    flex: 1;
+    display: flex;
+}
+
+.attach_file {
+    position: absolute;
+    height: 23px;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.upload_options {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 10px;
+    bottom: 100%;
+    left: 0;
+}
+
+.box_send_message_voice {
+    width: 47px;
+    height: 47px;
     background: #4a90e2;
-    color: white;
-    cursor: pointer;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
     transition: background 0.2s;
-    flex-shrink: 0;
+    cursor: pointer;
 }
 
-.send-button:hover {
+.send_message_button {
+    display: none;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    background: none;
+    height: 20px;
+    width: 20px;
+}
+
+.box_send_message_voice:hover {
     background: #4a90e2;
 }
 
-.send-button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
+.startRecord {
+    width: 47px;
+    height: 47px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    cursor: pointer;
 }
+
+.box_record_options {
+    display: none;
+    position: absolute;
+    width: 99%;
+    height: 80%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    justify-content: end;
+    gap: 2%;
+    background: #c7e2f6;
+    border-radius: 100px;
+    padding: 0 6px;
+}
+
+.box_record_options.active {
+    display: flex;
+}
+
+.delete_record {
+    margin-right: 20px;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status_record {
+}
+
+.timer_record {
+}
+
+#timer.blink {
+    animation: blink 0.5s step-start infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.stop_record {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.send_record {
+    width: 47px;
+    height: 47px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #4a90e2;
+    border-radius: 50%;
+}
+
+/*******/
+
+body {
+    font-family: sans-serif;
+    padding: 20px;
+    background: #f0f0f0;
+}
+.audio-player {
+    display: flex;
+    align-items: center;
+    background: #e0f7fa;
+    padding: 10px 15px;
+    border-radius: 25px;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #00acc1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.play-btn::before {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 12px solid white;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+.play-btn.paused::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background: white;
+    clip-path: polygon(0% 0%, 40% 0%, 40% 100%, 0% 100%, 60% 0%, 100% 0%, 100% 100%, 60% 100%);
+}
+canvas {
+    flex: 1;
+    height: 40px;
+    border-radius: 10px;
+    background: #b2ebf2;
+}
+.time {
+    font-size: 12px;
+    margin-left: 10px;
+    width: 35px;
+    text-align: center;
+}
+
 
 /* Empty State */
 .empty-state {
@@ -871,7 +1035,6 @@ p.not_find_message {
 }
 
 
-
 /* ----------------------------------------- */
 /* select image from send */
 
@@ -1118,22 +1281,6 @@ p.not_find_message {
     display: flex;
 }
 
-.attach_file {
-    position: relative;
-    height: fit-content;
-}
-
-.upload_options {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    width: max-content;
-    background: #ffffff;
-    border-radius: 6px;
-    padding: 10px;
-    bottom: 100%;
-    left: 0;
-}
 
 /* --------------------------------- */
 /* counter pv new */
@@ -1152,21 +1299,7 @@ p.not_find_message {
 .counter_pv_new.active {
     display: block;
 }
-.startRecord{
-    width: 40px;
-    height: 40px;
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-}
-.startRecord.enable {
-    background: #9fc7ff;
-    box-shadow: 0 0 0 0 #d5e6ff;
-    animation: pulseShadow 1s infinite;
-}
+
 
 @keyframes pulseShadow {
     0% {
@@ -1195,6 +1328,7 @@ p.not_find_message {
     color: #363636;
     font-size: 16px;
 }
+
 .lightbox {
     display: none;
     position: fixed;
@@ -1205,7 +1339,7 @@ p.not_find_message {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .lightbox-content {
@@ -1261,7 +1395,8 @@ p.not_find_message {
         transform: translateX(100%);
         transition: transform 0.3s ease-in-out;
     }
-    .messages-container{
+
+    .messages-container {
         height: calc(100vh - 60px);
         height: calc(100dvh - 60px);
     }
@@ -1308,7 +1443,8 @@ p.not_find_message {
     .show_ather_chat svg {
         display: block;
     }
-    .section_show_message{
+
+    .section_show_message {
         padding: 0;
     }
 
