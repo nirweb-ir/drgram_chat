@@ -1,4 +1,4 @@
-
+<div class="popup_error_message_back"></div>
 <div class="popup_error_message" style="display: none">
     <img src="./assets/images/error_icon.png" alt="">
     <h3>

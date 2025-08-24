@@ -79,16 +79,15 @@ jQuery(document).ready(function ($) {
         }
 
         $('.chat_user_box').addClass('active')
-        $('#chat_id_input').val(chat_id)
-        get_messages_chat(chat_id)
-        setTimeout(function () {
-            chatBox.scrollTop(chatBox[0].scrollHeight);
-        }, '1000')
+        // const chat_id = $(this).attr('data-chat');
+        $('#chat_id_input').val(chat_id);
+
+        get_messages_chat(chat_id, true);
     })
 
     function send() {
-        $('.startRecord').hide()
-        $('.send_message_button').show()
+        $('.startRecord').show()
+        $('.send_message_button').hide()
         var item_active = $('.chat-item.active')
         let status = item_active.attr('status')
         if (status === 'new') {

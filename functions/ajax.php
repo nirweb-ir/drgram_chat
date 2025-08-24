@@ -32,6 +32,10 @@ switch ($action) {
         get_messages_chat();
         break;
 
+    case 'get_older_messages':
+        get_older_messages();
+        break;
+
 
         echo json_encode(['status' => 'error', 'message' => 'Invalid action']);
         break;
@@ -136,6 +140,7 @@ function get_list_chats()
 
     curl_close($curl);
     $response = json_decode($response, true);
+//    var_dump($response);
     echo json_encode($response);
 
 }
@@ -148,7 +153,7 @@ function get_messages_chat()
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/get_chat_messages',
+        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/nt-get-message-conversation',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -157,6 +162,36 @@ function get_messages_chat()
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
         CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded'
+        ),
+    ));
+
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+    $response = json_decode($response, true);
+    echo json_encode($response);
+
+}
+function get_older_messages()
+{
+    $last_id = $_POST['last_id'];
+
+    $chat_id = $_POST['chat_id'];
+    $token = $_COOKIE['dpchat_token'];
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/nt-get-old-message-conversation',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token.'&last_id=' . $last_id,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
@@ -179,7 +214,7 @@ function send_messages_to_chat()
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/send_message',
+        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/nt-send_message',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -187,7 +222,7 @@ function send_messages_to_chat()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token. '&message=' . $message. '&type=' . $type,
+        CURLOPT_POSTFIELDS => 'conversation_id=' . $chat_id. '&token=' . $token. '&message=' . $message. '&message_type=' . $type,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
@@ -210,7 +245,7 @@ function seen_message()
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/seen_message',
+        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/nt-seen_message',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -218,7 +253,7 @@ function seen_message()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'message_id=' . $message_id. '&chat_id=' . $chat_id,
+        CURLOPT_POSTFIELDS => 'token='.$token.'&message_id=' . $message_id. '&chat_id=' . $chat_id,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
