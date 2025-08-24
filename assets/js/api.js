@@ -271,7 +271,7 @@ function get_list_chats(user_id) {
         data: { action: "get_list_chats", user_id },
         dataType: "json",
         success: function (response) {
-
+            console.log(response)
             if (response && response[0].conversation_status) {
                 let data_new = '';
                 let data_finish = '';
@@ -306,7 +306,7 @@ function get_list_chats(user_id) {
 // -------------------------
 jQuery(document).ready(function ($) {
     const urlParams = new URLSearchParams(window.location.search);
-    let idClient = urlParams.get('id_client');
+    let idClient = urlParams.get('code');
 
     $.ajax({
         url: ajaxUrl,
@@ -315,6 +315,9 @@ jQuery(document).ready(function ($) {
         dataType: "json",
         success: function (response) {
             if (response.status === "success") {
+                let url = new URL(window.location.href);
+                url.searchParams.delete("code");
+                window.history.replaceState({}, document.title, url);
                 let user_id = response.user_id;
                 connect_io(user_id);
                 get_list_chats(user_id);

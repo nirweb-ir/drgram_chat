@@ -48,13 +48,13 @@ function check_user_id()
     $curl = curl_init();
 
     if (!empty($id_client)) {
-        $body ='user_id=' . $id_client;
+        $body ='code=' . $id_client;
     }else{
-        $body ='user_id=' . $id_client.'&token='.$token;
+        $body ='token='.$token;
     }
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/dpchat_check_user',
+        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/nt-check-user',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
@@ -70,37 +70,41 @@ function check_user_id()
 
     $response = curl_exec($curl);
 
+
     curl_close($curl);
     $response = json_decode($response, true);
     if ($response['status'] === 'success') {
-        $token = $response['token'];
-        $user_id = $response['user_id'];
+        $token = $response['token'] ?? '';
+        $user_id = $response['user_id'] ?? '';
         $expiry_time = time() + (14 * 24 * 60 * 60);
-        setcookie("dpchat_token", "", time() - 3600, "/");
-        setcookie("dpchat_id", "", time() - 3600, "/");
-        setcookie(
-            'dpchat_token',
-            $token,
-            [
-                'expires' => $expiry_time,
-                'path' => '/',             // قابل دسترسی در کل دامنه
-                'domain' => '',            // اگر نیاز به دامنه خاص دارید، اینجا بگذارید
-                'secure' => true,          // فقط روی HTTPS
-                'httponly' => true,        // غیرقابل دسترسی از جاوااسکریپت
-                'samesite' => 'None'     // جلوگیری از CSRF، می‌توانید 'Lax' هم استفاده کنید
-            ]
-        );
-        setcookie(
-            'dpchat_id',
-            $user_id,
-            [
-                'expires' => $expiry_time,
-                'path' => '/',             // قابل دسترسی در کل دامنه
-                'domain' => '',            // اگر نیاز به دامنه خاص دارید، اینجا بگذارید
-                'secure' => false,          // فقط روی HTTPS
-                'httponly' => false,        // غیرقابل دسترسی از جاوااسکریپت
-            ]
-        );
+        if ($token){
+            setcookie(
+                'dpchat_token',
+                $token,
+                [
+                    'expires' => $expiry_time,
+                    'path' => '/',
+                    'domain' => '',
+                    'secure' => true,
+                    'httponly' => true,
+                    'samesite' => 'None'
+                ]
+            );
+        }
+        if ($user_id){
+            setcookie(
+                'dpchat_id',
+                $user_id,
+                [
+                    'expires' => $expiry_time,
+                    'path' => '/',
+                    'domain' => '',
+                    'secure' => false,
+                    'httponly' => false,
+                ]
+            );
+        }
+
     }
     echo json_encode($response);
 
@@ -114,7 +118,7 @@ function get_list_chats()
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
-        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/dpchat_get_chats',
+        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/nt-get-conversation-list',
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_ENCODING => '',
         CURLOPT_MAXREDIRS => 10,
