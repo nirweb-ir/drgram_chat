@@ -323,7 +323,7 @@ jQuery(document).ready(function ($) {
                 get_list_chats(user_id);
                 $('.loading_page_back').hide();
             } else {
-                $("#response").html("<p style='color:red'>" + response.message + "</p>");
+                $(".popup_error_message").show()
             }
         },
         error: function (xhr, status, error) {
