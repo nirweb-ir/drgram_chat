@@ -1,5 +1,13 @@
 jQuery(document).ready(function ($) {
 
+    function showToast(message, type = "error") {
+        let toast = $("#toast");
+        toast.removeClass("success error").addClass(type).text(message).addClass("show");
+
+        setTimeout(() => {
+            toast.removeClass("show");
+        }, 3000); // بعد از ۳ ثانیه مخفی شود
+    }
 
     // -------------------------------------------
     //  سویج بین پیوی های درحال انتظار و پیوی های جواب داده شود
@@ -189,12 +197,26 @@ jQuery(document).ready(function ($) {
         $("#fileInput").on("change", function () {
             let file = this.files[0];
             if (!file) return;
+
             // بررسی نوع فایل
             let isImage = file.type.startsWith("image/");
             let type = isImage ? 'image' : 'file'
 
             let formData = new FormData();
             formData.append("file", file);
+
+            // 👇 اضافه کردن پیام لودینگ در چت
+            let chat_id = $('#chat_id_input').val();
+            let loadingId = "loading_" + Date.now();
+            let loadingHTML = `
+        <div class="message sent" id="${loadingId}">
+            <div class="message-bubble">
+                <div class="loading-spinner"></div>
+                <div class="message-time">در حال آپلود...</div>
+            </div>
+        </div>
+    `;
+            $(".chat_user_box_messages").append(loadingHTML);
 
             $.ajax({
                 url: "functions/upload.php",
@@ -203,24 +225,24 @@ jQuery(document).ready(function ($) {
                 contentType: false,
                 processData: false,
                 success: function (data) {
-
-
                     if (data.status === "success") {
-                        let chat_id = $('#chat_id_input').val()
-                        send_messages_chat(chat_id, data.url, type)
-                    } else {
-                        alert(data.message);
-                    }
+                        $("#" + loadingId).remove();
+                        send_messages_chat(chat_id, data.url, type);
 
+                        // toast موفقیت
+                        showToast("فایل با موفقیت آپلود شد ✅", "success");
+                    } else {
+                        $("#" + loadingId).remove();
+                        showToast(data.message, "error");
+                    }
+                },
+                error: function () {
+                    $("#" + loadingId).remove();
+                    showToast("خطا در آپلود فایل ❌", "error");
                 }
             });
         });
 
-        function sendToN8N(fileUrl) {
-            $.post("to_n8n.php", {file: fileUrl}, function (resp) {
-                console.log("Sent to n8n:", resp);
-            });
-        }
 
     });
 

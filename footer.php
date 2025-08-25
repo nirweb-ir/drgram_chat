@@ -8,6 +8,7 @@
         کاربر یافت نشد
     </p>
 </div>
+<div id="toast" class="toast"></div>
 </body>
 </html>
 <!--<script src="./src/js/chat.js"></script>-->

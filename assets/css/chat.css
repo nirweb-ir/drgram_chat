@@ -1622,3 +1622,47 @@ canvas {
         margin-bottom: 0px;
     }
 }
+
+/** لودینگ آپلود **/
+.loading-spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #4a90e2;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: spin3 1s linear infinite;
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin3 {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* استایل توست */
+.toast {
+    visibility: hidden;
+    min-width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: right;
+    border-radius: 6px;
+    padding: 10px 16px;
+    position: fixed;
+    z-index: 9999;
+    bottom: 30px;
+    left: 30px;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+}
+.toast.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}
+.toast.error { background-color: #e74c3c; }   /* قرمز برای خطا */
+.toast.success { background-color: #2ecc71; } /* سبز برای موفق */

@@ -2,7 +2,7 @@
 header('Content-Type: application/json; charset=utf-8');
 
 // تنظیمات امنیتی
-$maxSize = 2 * 1024 * 1024; // 2MB
+$maxSize = 6 * 1024 * 1024; // 2MB
 $allowed = ['jpg','jpeg','png','gif','webp','mp3','wav','ogg','webm','m4a','pdf','doc','docx','ppt','pptx','xls','xlsx','pptx'];
 
 if(!isset($_FILES['file'])){
