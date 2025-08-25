@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> پذیرش چت </title>
-    <link rel="stylesheet" href="./assets/css/chat.css?v=1.0.9">
+    <link rel="stylesheet" href="./assets/css/chat.css?v=1.1.0">
     <link rel="stylesheet" href="./assets/font/fontiran.css">
     <script>
         const ajaxUrl = "<?php echo 'functions/ajax.php'; ?>";
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.5.6/RecordRTC.js"></script>
+    <script src="./assets/js/RecordRTC.js"></script>
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/socket.io.min.js"></script>
-    <script src="./assets/js/api.js?v=1.0.9"></script>
-    <script src="./assets/js/main.js?v=1.0.9"></script>
+    <script src="./assets/js/api.js?v=1.1.0"></script>
+    <script src="./assets/js/main.js?v=1.1.0"></script>
 
 
 </head>

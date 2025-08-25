@@ -289,6 +289,7 @@ jQuery(document).ready(function ($) {
         if (!isPaused) {
             $('#pauseBtn_icon').hide();
             $('#pauseBtn_icon_play').show();
+            $('.status_record').addClass('stop');
 
             recorder.pauseRecording();
             isPaused = true;
@@ -296,7 +297,7 @@ jQuery(document).ready(function ($) {
         } else {
             $('#pauseBtn_icon_play').hide();
             $('#pauseBtn_icon').show();
-
+            $('.status_record').removeClass('stop');
             recorder.resumeRecording();
             isPaused = false;
             resumeTimer();
@@ -311,7 +312,7 @@ jQuery(document).ready(function ($) {
             });
         }
         audioBlob = null;
-        $("#player").attr("src", "");
+        // $("#player").attr("src", "");
         resetTimer();
         stopStream()
     });
