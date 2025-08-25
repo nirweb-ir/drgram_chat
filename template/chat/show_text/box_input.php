@@ -46,7 +46,11 @@
 
 
     <input type="hidden" id="chat_id_input" value="">
-    <input type="file" id="fileInput" accept="image/*" style="display:none">
+    <input type="file" id="fileInput" accept="image/*,.pdf,
+               application/msword,
+               application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+               application/vnd.ms-excel,
+               application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none">
 
 
 

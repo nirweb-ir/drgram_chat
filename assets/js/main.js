@@ -99,7 +99,7 @@ jQuery(document).ready(function ($) {
         let message = $('#messageInput').val()
         console.log(message)
         send_messages_chat(chat_id, message)
-        $('#messageInput').val('')
+        $('#messageInput').val('').trigger("input")
     }
 
     $('body').on('click', '#sendButton', function () {
@@ -189,6 +189,9 @@ jQuery(document).ready(function ($) {
         $("#fileInput").on("change", function () {
             let file = this.files[0];
             if (!file) return;
+            // بررسی نوع فایل
+            let isImage = file.type.startsWith("image/");
+            let type = isImage ? 'image' : 'file'
 
             let formData = new FormData();
             formData.append("file", file);
@@ -204,7 +207,7 @@ jQuery(document).ready(function ($) {
 
                     if (data.status === "success") {
                         let chat_id = $('#chat_id_input').val()
-                        send_messages_chat(chat_id, data.url, 'image')
+                        send_messages_chat(chat_id, data.url, type)
                     } else {
                         alert(data.message);
                     }

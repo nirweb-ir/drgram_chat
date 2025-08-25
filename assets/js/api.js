@@ -55,6 +55,18 @@ function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = 
             svg_check += svg_check_seen
         }
     }
+
+    let chat_id =$('#chat_id_input').val()
+    console.log(6666666)
+    console.log(chat_id)
+    if (chat_id){
+        let message_show = message
+        if (type !== 'text'){
+            message_show ='فایل'
+        }
+        $('.chat_item_'+chat_id).find('.chat-last-message').text(truncateText(message_show))
+    }
+
     if (type === 'image') {
         return `
         <div class="message ${senderClass}" id="message_${id}" data-id="${id}">
@@ -75,6 +87,20 @@ function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = 
             </div>
             ${svg_check}
         </div>`;
+    }  else if (type === 'file') {
+        return `
+        <div class="message ${senderClass}" id="message_${id}" data-id="${id}">
+            <div class="message-bubble voice_message">
+                <div class="box_download_file">
+                <p>${message}</p>
+                <a href="${message}" download>
+                دانلود فایل
+                </a>
+                </div>
+                <div class="message-time">${time}</div>
+            </div>
+            ${svg_check}
+        </div>`;
     } else {
         return `
         <div class="message ${senderClass}" id="message_${id}" data-id="${id}">
@@ -85,6 +111,8 @@ function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = 
             ${svg_check}
         </div>`;
     }
+
+
 }
 
 // -------------------------
@@ -332,6 +360,9 @@ function buildChatItemHTML(value) {
     let message = value.last_message || "...";
     if (value.message_type === 'image') {
         message = "فایل رسانه";
+    }
+    if (value.message_type === 'file') {
+        message = "فایل";
     }
     if (value.message_type === 'voice') {
         message = "فایل صوتی";
