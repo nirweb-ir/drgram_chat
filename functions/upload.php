@@ -41,11 +41,11 @@ $newName = bin2hex(random_bytes(16)) . "." . $ext;
 $destPath = $uploadDir . $newName;
 
 // پروتکل + دامنه
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ||
-    $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+$protocol = "https://";
 $host = $_SERVER['HTTP_HOST'];
 if ($host == "localhost") {
     $host.= '/drgram_chat';
+    $protocol = "http://";
 }
 
 if(move_uploaded_file($file['tmp_name'], $destPath)){

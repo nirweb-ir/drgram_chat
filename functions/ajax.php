@@ -48,14 +48,36 @@ switch ($action) {
 function check_user_id()
 {
     $token = $_COOKIE['dpchat_token'] ?? '';
-    $id_client = $_POST['id_client'];
+    $id_client = $_POST['id_client'] ?? '';
     $curl = curl_init();
-
-    if (!empty($id_client)) {
-        $body ='code=' . $id_client;
-    }else{
-        $body ='token='.$token;
+    $expiry_time = time() + (14 * 24 * 60 * 60);
+    if (1) {
+        setcookie(
+            'dpchat_code',
+            $id_client,
+            [
+                'expires' => $expiry_time,
+                'path' => '/',
+                'domain' => '',
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'None'
+            ]
+        );
     }
+
+    $old_code = $_COOKIE['dpchat_code'] ?? '';
+
+    if ($old_code == $id_client) {
+        $body = 'token=' . $token;
+    } else {
+        if (!empty($id_client)) {
+            $body = 'code=' . $id_client;
+        } else {
+            $body = 'token=' . $token;
+        }
+    }
+
 
     curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/nt-check-user',
@@ -81,7 +103,7 @@ function check_user_id()
         $token = $response['token'] ?? '';
         $user_id = $response['user_id'] ?? '';
         $expiry_time = time() + (14 * 24 * 60 * 60);
-        if ($token){
+        if ($token) {
             setcookie(
                 'dpchat_token',
                 $token,
@@ -95,7 +117,7 @@ function check_user_id()
                 ]
             );
         }
-        if ($user_id){
+        if ($user_id) {
             setcookie(
                 'dpchat_id',
                 $user_id,
@@ -130,7 +152,7 @@ function get_list_chats()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'token=' . $token ,
+        CURLOPT_POSTFIELDS => 'token=' . $token,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
@@ -161,7 +183,7 @@ function get_messages_chat()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token,
+        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id . '&token=' . $token,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
@@ -174,6 +196,7 @@ function get_messages_chat()
     echo json_encode($response);
 
 }
+
 function get_older_messages()
 {
     $last_id = $_POST['last_id'];
@@ -191,7 +214,7 @@ function get_older_messages()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id. '&token=' . $token.'&last_id=' . $last_id,
+        CURLOPT_POSTFIELDS => 'chat_id=' . $chat_id . '&token=' . $token . '&last_id=' . $last_id,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
@@ -204,6 +227,7 @@ function get_older_messages()
     echo json_encode($response);
 
 }
+
 function send_messages_to_chat()
 {
 
@@ -222,7 +246,7 @@ function send_messages_to_chat()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'conversation_id=' . $chat_id. '&token=' . $token. '&message=' . $message. '&message_type=' . $type,
+        CURLOPT_POSTFIELDS => 'conversation_id=' . $chat_id . '&token=' . $token . '&message=' . $message . '&message_type=' . $type,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),
@@ -235,6 +259,7 @@ function send_messages_to_chat()
     echo json_encode($response);
 
 }
+
 function seen_message()
 {
 
@@ -253,7 +278,7 @@ function seen_message()
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => 'POST',
-        CURLOPT_POSTFIELDS => 'token='.$token.'&message_id=' . $message_id. '&chat_id=' . $chat_id,
+        CURLOPT_POSTFIELDS => 'token=' . $token . '&message_id=' . $message_id . '&chat_id=' . $chat_id,
         CURLOPT_HTTPHEADER => array(
             'Content-Type: application/x-www-form-urlencoded'
         ),

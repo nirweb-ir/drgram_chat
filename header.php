@@ -10,6 +10,7 @@
         const ajaxUrl = "<?php echo 'functions/ajax.php'; ?>";
     </script>
     <script src="./assets/js/RecordRTC.js"></script>
+    <script src="./assets/js/lame.min.js"></script>
     <script src="./assets/js/jquery.min.js"></script>
     <script src="./assets/js/socket.io.min.js"></script>
     <script src="./assets/js/api.js?v=1.1.0"></script>

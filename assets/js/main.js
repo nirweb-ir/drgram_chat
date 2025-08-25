@@ -232,12 +232,41 @@ jQuery(document).ready(function ($) {
     let seconds = 0;
     let isPaused = false;
 
+// 🎵 تبدیل WAV به MP3
+    function convertBlobToMP3(blob, callback) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const arrayBuffer = reader.result;
+            const wav = lamejs.WavHeader.readHeader(new DataView(arrayBuffer));
+            if(!wav) {
+                alert("خطا در خواندن فایل WAV. مطمئن شوید که ضبط WAV واقعی است.");
+                return;
+            }
+
+            const samples = new Int16Array(arrayBuffer, wav.dataOffset, wav.dataLen / 2);
+            const mp3Encoder = new lamejs.Mp3Encoder(wav.channels, wav.sampleRate, 128);
+            const mp3Data = [];
+            let sampleBlockSize = 1152;
+            for (let i = 0; i < samples.length; i += sampleBlockSize) {
+                const sampleChunk = samples.subarray(i, i + sampleBlockSize);
+                const mp3buf = mp3Encoder.encodeBuffer(sampleChunk);
+                if (mp3buf.length > 0) mp3Data.push(mp3buf);
+            }
+            const mp3buf = mp3Encoder.flush();
+            if (mp3buf.length > 0) mp3Data.push(mp3buf);
+
+            const mp3Blob = new Blob(mp3Data, { type: 'audio/mp3' });
+            callback(mp3Blob);
+        };
+        reader.readAsArrayBuffer(blob);
+    }
+
+// ⏱ تایمر
     function formatTime(sec) {
         let m = Math.floor(sec / 60).toString().padStart(2, '0');
         let s = (sec % 60).toString().padStart(2, '0');
         return `${m}:${s}`;
     }
-
     function startTimer() {
         timerInterval = setInterval(() => {
             if (!isPaused) {
@@ -266,14 +295,15 @@ jQuery(document).ready(function ($) {
         }
     }
 
+// 🎙 شروع ضبط
     $("#startBtn").on("click", async function () {
         $('.box_record_options').addClass('active');
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
         recorder = RecordRTC(stream, {
             type: 'audio',
-            mimeType: 'audio/webm;codecs=opus',
-            recorderType: MediaStreamRecorder,
+            mimeType: 'audio/wav',
+            recorderType: StereoAudioRecorder, // ← مهم برای WAV واقعی
             numberOfAudioChannels: 1
         });
 
@@ -282,21 +312,21 @@ jQuery(document).ready(function ($) {
 
         resetTimer();
         startTimer();
-
     });
 
+// ⏸ توقف/ادامه
     $("#pauseBtn").on("click", function () {
         if (!isPaused) {
-            $('#pauseBtn_icon').hide();
-            $('#pauseBtn_icon_play').show();
+            $('#pauseBtn_icon')?.hide();
+            $('#pauseBtn_icon_play')?.show();
             $('.status_record').addClass('stop');
 
             recorder.pauseRecording();
             isPaused = true;
             pauseTimer();
         } else {
-            $('#pauseBtn_icon_play').hide();
-            $('#pauseBtn_icon').show();
+            $('#pauseBtn_icon_play')?.hide();
+            $('#pauseBtn_icon')?.show();
             $('.status_record').removeClass('stop');
             recorder.resumeRecording();
             isPaused = false;
@@ -304,6 +334,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
+// ❌ حذف ضبط
     $("#deleteBtn").on("click", function () {
         $('.box_record_options').removeClass('active');
         if (recorder) {
@@ -312,28 +343,36 @@ jQuery(document).ready(function ($) {
             });
         }
         audioBlob = null;
-        // $("#player").attr("src", "");
+        $("#player").attr("src", "");
         resetTimer();
-        stopStream()
+        stopStream();
     });
 
-// 📤 ارسال (Stop و ارسال)
+// 📤 ارسال صدا
     $("#sendBtn").on("click", function () {
         if (!recorder) return;
         $('.box_record_options').removeClass('active');
         resetTimer();
+
         if (recorder.getState() === 'recording' || recorder.getState() === 'paused') {
             recorder.stopRecording(function() {
                 audioBlob = recorder.getBlob();
 
-                sendAudio();
+                convertBlobToMP3(audioBlob, function(mp3Blob) {
+                    audioBlob = mp3Blob;
+                    sendAudio();
+                    // نمایش پیش‌نمایش MP3
+                    const player = document.getElementById("player");
+                    player.src = URL.createObjectURL(audioBlob);
+                });
             });
         } else {
             sendAudio();
         }
-        stopStream()
+        stopStream();
     });
 
+// ارسال به سرور
     function sendAudio() {
         if (!audioBlob) {
             console.log("⚠️ هیچ فایل ضبط شده‌ای وجود ندارد.");
@@ -341,7 +380,7 @@ jQuery(document).ready(function ($) {
         }
 
         let formData = new FormData();
-        formData.append("file", audioBlob, "voice.webm");
+        formData.append("file", audioBlob, "voice.mp3");
 
         $.ajax({
             url: "functions/upload.php",
