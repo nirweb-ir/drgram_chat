@@ -1,4 +1,14 @@
+
+function setBodyHeight() {
+    jQuery("body").css("height", window.innerHeight + "px");
+}
 jQuery(document).ready(function ($) {
+    setBodyHeight();
+
+    // وقتی سایز صفحه تغییر کرد (مثل باز شدن کیبورد)
+    $(window).on("resize orientationchange", function () {
+        setBodyHeight();
+    });
 
     function showToast(message, type = "error") {
         let toast = $("#toast");
@@ -115,7 +125,7 @@ jQuery(document).ready(function ($) {
         }
         let chat_id = $('#chat_id_input').val()
         let message = $('#messageInput').val()
-        console.log(message)
+
         send_messages_chat(chat_id, message)
         $('#messageInput').val('').trigger("input")
     }
@@ -340,7 +350,7 @@ jQuery(document).ready(function ($) {
         });
 
         recorder.startRecording();
-        console.log("Recording started...");
+        // console.log("Recording started...");
 
         resetTimer();
         startTimer();
@@ -407,7 +417,7 @@ jQuery(document).ready(function ($) {
 // ارسال به سرور
     function sendAudio() {
         if (!audioBlob) {
-            console.log("⚠️ هیچ فایل ضبط شده‌ای وجود ندارد.");
+            // console.log("⚠️ هیچ فایل ضبط شده‌ای وجود ندارد.");
             return;
         }
 
@@ -421,7 +431,7 @@ jQuery(document).ready(function ($) {
             processData: false,
             contentType: false,
             success: function (res) {
-                console.log("✅ upload response:", res);
+                // console.log("✅ upload response:", res);
                 if (res.status === "success") {
                     let chat_id = $('#chat_id_input').val();
                     send_messages_chat(chat_id, res.url, 'voice');

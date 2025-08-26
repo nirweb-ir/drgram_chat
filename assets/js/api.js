@@ -81,8 +81,7 @@ function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = 
     }
 
     let chat_id =$('#chat_id_input').val()
-    console.log(6666666)
-    console.log(chat_id)
+
     if (chat_id){
         let message_show = message
         if (type !== 'text'){
@@ -322,8 +321,7 @@ function check_message(data) {
 // بررسی پیام جدید
 // -------------------------
 function seen_message(message_id,chat_id) {
-    console.log(message_id)
-    console.log(chat_id)
+
     if (message_id > 0) {
         $.ajax({
             url: ajaxUrl,
@@ -439,7 +437,7 @@ function get_list_chats(user_id,convesation_id) {
                 if (data !== '') $('.chat_list_answered_chats').html(data);
 
                 if (convesation_id){
-                    console.log(convesation_id)
+
                     var chat_item =  $('.chat_item_'+convesation_id)
                     chat_item.addClass('active')
                     let user_name = chat_item.find('.chat-name').text()
