@@ -1,14 +1,19 @@
 
-function setBodyHeight() {
-    jQuery("body").css("height", window.innerHeight + "px");
+function fixIOSHeight() {
+    // کمی تاخیر برای اینکه iOS مقدار درست بده
+    setTimeout(function () {
+        jQuery(".container").css("height", window.innerHeight + "px");
+    }, 50);
 }
-jQuery(document).ready(function ($) {
-    setBodyHeight();
 
-    // وقتی سایز صفحه تغییر کرد (مثل باز شدن کیبورد)
-    $(window).on("resize orientationchange", function () {
-        setBodyHeight();
+jQuery(document).ready(function () {
+    fixIOSHeight();
+
+    jQuery(window).on("resize orientationchange", function () {
+        fixIOSHeight();
     });
+});
+jQuery(document).ready(function ($) {
 
     function showToast(message, type = "error") {
         let toast = $("#toast");

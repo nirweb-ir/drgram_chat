@@ -9,14 +9,21 @@
 body {
     font-family: IRANSans;
     background: #eee;
-    height: 100vh;
-    height: 100svh ;
-    overflow: hidden;
+
+    /*height: 100vh;*/
+    /*height: 100svh ;*/
+    /*overflow: hidden;*/
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* مهم: روی body اسکرول نذار */
 }
 
 .container {
     display: flex;
-    height: 100vh;
+    /*height: 100vh;*/
     position: relative;
 }
 

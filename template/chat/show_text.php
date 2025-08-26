@@ -1,7 +1,4 @@
-<?php
-include "./template/chat/show_text/message.php";
-include "./template/chat/show_text/show_image.php";
-?>
+
 
 
 <div class="section_show_message">
