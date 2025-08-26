@@ -10,6 +10,7 @@ body {
     font-family: IRANSans;
     background: #eee;
     height: 100vh;
+    height: 100dvh ;
     overflow: hidden;
 }
 
@@ -95,12 +96,13 @@ body {
 
 .section_show_pv_container {
     padding: 15px;
+    height: calc(100% - 60px);
 }
 
 .sidebar {
     display: flex;
     background-color: #ffffff;
-    height: calc(100vh - 90px);
+    height: 100%;
     width: 350px;
     flex-direction: column;
     transition: transform 0.3s ease;
@@ -251,7 +253,7 @@ body {
 
 .chat-last-message {
     color: #666;
-    font-size: 14px;
+    font-size: 13px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -301,7 +303,7 @@ body {
 
 .chat-header {
     background: white;
-    padding: 13px;
+    padding: 10px;
     border-bottom: 1px solid #e5e5e5;
     display: flex;
     align-items: center;
@@ -309,8 +311,8 @@ body {
     position: relative;
     justify-content: space-between;
     border-radius: 6px 6px 0 0;
-    height: 8%;
-    min-height: 64px;
+    height: 60px;
+    /* min-height: 64px; */
 }
 
 .chat-header_container {
@@ -348,7 +350,7 @@ body {
     padding-top: 5px;
     margin-right: 10px;
     font-weight: 500;
-    font-size: 17px;
+    font-size: 16px;
 }
 
 .show_ather_chat svg {
@@ -367,8 +369,8 @@ body {
     position: relative;
     flex: 1;
     overflow-y: auto;
-    height: calc(100vh - 90px);
-    height: calc(100dvh - 90px);
+    /* height: calc(100vh - 90px); */
+    height: 100%;
 }
 
 .chat_user_box {
@@ -404,6 +406,10 @@ p.not_find_message {
     overflow-x: hidden;
     height: 90%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    width: 100%;
 }
 
 .message {
@@ -434,10 +440,12 @@ p.not_find_message {
 .message-bubble {
     width: max-content;
     max-width: 70%;
-    padding: 12px 16px;
+    padding: 10px ;
     border-radius: 18px;
     position: relative;
     word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.8em;
 }
 
 .message-bubble img {
@@ -454,7 +462,6 @@ p.not_find_message {
 
 .message.received .message-bubble {
     background: white;
-    font-size: 15px;
     color: #282828;
     border-bottom-left-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -472,6 +479,8 @@ p.not_find_message {
     opacity: 0.7;
     margin-top: 5px;
     text-align: left;
+    line-height: 1;
+    margin-bottom: -5px;
 }
 
 .message.sent .message-time {
@@ -487,7 +496,6 @@ p.not_find_message {
     align-items: center;
     gap: 15px;
     height: max-content;
-    /*min-height: 72px;*/
     max-height: 180px;
     position: relative;
 }
@@ -549,7 +557,7 @@ p.not_find_message {
     font-size: 14px;
     outline: none;
     min-height: 47px;
-    max-height: 100%;
+    max-height: 170px;
     resize: none;
     padding: 10px;
     box-sizing: border-box;
@@ -561,6 +569,8 @@ p.not_find_message {
     position: relative;
     flex: 1;
     display: flex;
+    height: max-content;
+    max-height: 180px;
 }
 
 .attach_file {
@@ -804,6 +814,7 @@ canvas {
     text-overflow: ellipsis;
     position: relative;
     padding: 0;
+    font-size: 13px;
 }
 
 /* افکت محو شونده انتهایی */
@@ -1335,22 +1346,23 @@ canvas {
 
 .section_show_message {
     width: 100%;
+    height: calc(100% - 60px);
     padding: 15px;
     border-radius: 15px;
 }
 
 .section_show_message_header {
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 15px;
+    padding: 10px 15px;
     gap: 20px;
-    height: 60px;
+    height: 50px;
 }
 
 .section_show_message_header_item svg {
-    width: 30px !important;
+    width: 25px !important;
     height: auto;
     margin-left: 5px;
 }
