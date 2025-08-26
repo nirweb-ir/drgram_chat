@@ -317,7 +317,7 @@ body {
 
 .chat-header_container {
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: center;
 }
 
@@ -350,7 +350,7 @@ body {
     padding-top: 5px;
     margin-right: 10px;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .show_ather_chat svg {
@@ -381,6 +381,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 16px;
+    font-size: 14px;
 }
 
 .chat_user_box {
@@ -450,11 +451,11 @@ p.not_find_message {
 .message-bubble {
     width: max-content;
     max-width: 70%;
-    padding: 10px ;
+    padding: 10px;
     border-radius: 18px;
     position: relative;
     word-wrap: break-word;
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.8em;
 }
 
@@ -1606,7 +1607,7 @@ canvas {
     }
 
     .chat-header {
-        padding: 12px 15px;
+        padding: 8px;
     }
 
 
