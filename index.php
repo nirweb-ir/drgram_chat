@@ -2,8 +2,9 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chat Page</title>
+    <script src="./assets/js/jquery.min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body, html {
@@ -16,9 +17,9 @@
         #app {
             display: flex;
             flex-direction: column;
-            height: 100vh;     /* پایه */
-            height: 100dvh;    /* مرورگرهای جدید */
+            height: 100%; /* فقط پایه */
         }
+
 
         /* هدر */
         header {
@@ -90,6 +91,7 @@
             border: 1px solid #ccc;
             border-radius: 20px;
             outline: none;
+            font-size: 16px; /* جلوگیری از زوم در iOS */
         }
         .input-bar button {
             margin-right: 8px;
@@ -130,28 +132,15 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // فیکس ارتفاع iOS
     function fixAppHeight() {
-        setTimeout(function () {
-            $("#app").css("height", window.innerHeight + "px");
-        }, 50);
+        jQuery("#app").css("height", window.innerHeight + "px");
     }
 
-    $(document).ready(function () {
+    jQuery(document).ready(function () {
         fixAppHeight();
-        $(window).on("resize orientationchange", fixAppHeight);
-
-        // تست ارسال پیام
-        $("#sendBtn").on("click", function () {
-            var txt = $("#msgInput").val().trim();
-            if (txt) {
-                $("#messages").append('<div class="message sent">'+ txt +'</div>');
-                $("#msgInput").val("");
-                // اسکرول به آخر
-                $("#messages").scrollTop($("#messages")[0].scrollHeight);
-            }
-        });
+        jQuery(window).on("resize orientationchange", fixAppHeight);
     });
+
 </script>
 </body>
 </html>
