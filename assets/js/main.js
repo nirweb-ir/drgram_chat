@@ -1,18 +1,13 @@
 
-function fixIOSHeight() {
-    // کمی تاخیر برای اینکه iOS مقدار درست بده
-    setTimeout(function () {
-        jQuery(".container").css("height", window.innerHeight + "px");
-    }, 50);
+function fixAppHeight() {
+    jQuery(".box_app").css("height", window.innerHeight + "px");
 }
 
 jQuery(document).ready(function () {
-    fixIOSHeight();
-
-    jQuery(window).on("resize orientationchange", function () {
-        fixIOSHeight();
-    });
+    fixAppHeight();
+    jQuery(window).on("resize orientationchange", fixAppHeight);
 });
+
 jQuery(document).ready(function ($) {
 
     function showToast(message, type = "error") {

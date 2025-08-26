@@ -1,146 +1,63 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chat Page</title>
-    <script src="./assets/js/jquery.min.js"></script>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, html {
-            height: 100%;
-            overflow: hidden;
-            font-family: sans-serif;
-            background: #f2f2f2;
-        }
-
-        #app {
-            display: flex;
-            flex-direction: column;
-            height: 100%; /* فقط پایه */
-        }
+<?php
 
 
-        /* هدر */
-        header {
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 10px;
-            background: transparent; /* بکگراند حذف شد */
-            color: #333;
-        }
-        header .icon {
-            font-size: 20px;
-            cursor: pointer;
-        }
+//if ( isset($_GET['code']) && isset($_GET['state'])) {
+//
+//    $code = $_GET['code'];
+//    $book_id = $_GET['state'];
+//    $curl = curl_init();
+//
+//    curl_setopt_array($curl, array(
+//        CURLOPT_URL => 'https://n8n.nirweb.ir/webhook/check-user',
+//        CURLOPT_RETURNTRANSFER => true,
+//        CURLOPT_ENCODING => '',
+//        CURLOPT_MAXREDIRS => 10,
+//        CURLOPT_TIMEOUT => 0,
+//        CURLOPT_FOLLOWLOCATION => true,
+//        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//        CURLOPT_CUSTOMREQUEST => 'POST',
+//        CURLOPT_POSTFIELDS => 'book_id=' . $book_id. '&code=' . $code .'&redirect_uri=' . 'https://drgram.darkube.app/',
+//        CURLOPT_HTTPHEADER => array(
+//            'Content-Type: application/x-www-form-urlencoded'
+//        ),
+//    ));
+//
+//    $response = curl_exec($curl);
+//
+//    curl_close($curl);
+//    $response = json_decode($response, true);
+//    $user_id = $response['user_id'];
+//    $url = "https://drgram.darkube.app/?id_client=" . urlencode($user_id);
+//
+//// ریدایرکت
+//    header("Location: $url");
+//    exit();
+//
+//}elseif ( isset($_GET['code']) && !isset($_GET['state'])){
+//    include 'doctor.php';
+//}
+include "./header.php";
 
-        /* باکس اصلی چت */
-        .chat-box {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 0 8px rgba(0,0,0,0.1);
-            margin: 16px; /* حالت دسکتاپ */
-        }
 
-        /* در موبایل (عرض کم) باکس کامل صفحه بشه */
-        @media (max-width: 768px) {
-            .chat-box {
-                margin: 0;
-                border-radius: 0;
-            }
-        }
+include "./template/head_chat_page.php";
 
-        /* بخش پیام‌ها */
-        .messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-        }
-        .message {
-            background: #fff;
-            padding: 8px 12px;
-            margin: 6px 0;
-            border-radius: 10px;
-            max-width: 70%;
-        }
-        .message.sent {
-            align-self: flex-end;
-            background: #d1e7ff;
-        }
-        .message.received {
-            align-self: flex-start;
-            background: #e0e0e0;
-        }
 
-        /* نوار ورودی */
-        .input-bar {
-            display: flex;
-            border-top: 1px solid #ccc;
-            padding: 8px;
-            background: #fff;
-        }
-        .input-bar input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
-            outline: none;
-            font-size: 16px; /* جلوگیری از زوم در iOS */
-        }
-        .input-bar button {
-            margin-right: 8px;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 20px;
-            background: #1976d2;
-            color: #fff;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-<div id="app">
-    <!-- هدر -->
-    <header>
-        <div class="icon">☰</div>
-        <div>چت</div>
-        <div class="icon">⚙️</div>
-    </header>
+?>
+    <div class='container'>
+        <div class='screen_black'></div>
 
-    <!-- باکس چت -->
-    <div class="chat-box">
-        <!-- پیام‌ها -->
-        <div class="messages" id="messages">
-            <div class="message received">سلام 👋</div>
-            <div class="message sent">سلام، خوبی؟</div>
-            <div class="message received">ممنونم، تو چطوری؟</div>
-        </div>
+        <?php
 
-        <!-- ورودی متن -->
-        <div class="input-bar">
-            <input type="text" placeholder="پیام خود را بنویسید..." id="msgInput">
-            <button id="sendBtn">ارسال</button>
-        </div>
+
+        include "./template/chat/show_user.php";
+
+
+        include "./template/chat/show_text.php";
+
+
+        ?>
     </div>
-</div>
+<?php
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function fixAppHeight() {
-        jQuery("#app").css("height", window.innerHeight + "px");
-    }
 
-    jQuery(document).ready(function () {
-        fixAppHeight();
-        jQuery(window).on("resize orientationchange", fixAppHeight);
-    });
-
-</script>
-</body>
-</html>
+include "./footer.php";

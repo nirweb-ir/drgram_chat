@@ -24,3 +24,6 @@
 <div class="loading_page_back">
     <div class="loading_page"></div>
 </div>
+<div class="box_app">
+
+
