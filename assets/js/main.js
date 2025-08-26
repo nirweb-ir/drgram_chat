@@ -90,6 +90,16 @@ jQuery(document).ready(function ($) {
         // const chat_id = $(this).attr('data-chat');
         $('#chat_id_input').val(chat_id);
 
+        let start = $('.chat_item_'+chat_id).attr('start-time')
+        if (new Date(start) > new Date()) {
+            $('.notifications_pin_top').show()
+            $('.notifications_pin_top span').text(toShamsiPretty(start))
+
+        } else {
+            $('.notifications_pin_top').hide()
+        }
+
+
         get_messages_chat(chat_id, true);
     })
 

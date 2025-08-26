@@ -1,5 +1,4 @@
 <?php
-include "./template/chat/show_text/header_pv.php";
 include "./template/chat/show_text/message.php";
 include "./template/chat/show_text/show_image.php";
 ?>
@@ -20,7 +19,7 @@ include "./template/chat/show_text/show_image.php";
 
         <div class="chat_user_box">
             <?php
-            func_header_pv("f", "علی پارسا");
+            include_once "./template/chat/show_text/header_pv.php";
             ?>
             <div class="chat_user_box_messages">
 

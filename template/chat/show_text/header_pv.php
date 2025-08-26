@@ -1,8 +1,4 @@
-<?php
 
-function func_header_pv($first_title_carecter = "", $name = "")
-{
-    ?>
 
     <div id_pv="" class="chat-header " id="chatHeader">
 
@@ -19,7 +15,7 @@ function func_header_pv($first_title_carecter = "", $name = "")
             </div>
 
             <div class="chat-header-info">
-                <h3> <?= $first_title_carecter ?> </h3>
+                <h3>  </h3>
             </div>
 
         </div>
@@ -28,8 +24,12 @@ function func_header_pv($first_title_carecter = "", $name = "")
 
     </div>
 
-    <?php
-}
+    <div class="notifications_pin_top" style="display: none">
+        <p>
+            زمان شروع گفتگو :
+            <span>
 
-?>
+            </span>
 
+        </p>
+    </div>

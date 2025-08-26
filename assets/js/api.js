@@ -21,8 +21,32 @@ function toShamsi(dateInput) {
         month: "2-digit",
         day: "2-digit",
         hour: "2-digit",
-        minute: "2-digit"
+        minute: "2-digit",
+        timeZone: "Asia/Tehran"
     });
+}
+function toShamsiPretty(dateInput) {
+    let date;
+
+    if (typeof dateInput === "number") {
+        if (dateInput.toString().length <= 10) {
+            date = new Date(dateInput * 1000);
+        } else {
+            date = new Date(dateInput);
+        }
+    } else {
+        date = new Date(dateInput);
+    }
+
+    // گرفتن بخش‌های مختلف تاریخ شمسی
+    const options = { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Tehran" };
+    const formatter = new Intl.DateTimeFormat("fa-IR", options);
+
+    // رشته‌ی نهایی
+    const formatted = formatter.format(date);
+
+    // تبدیل "در تاریخ" اضافی که بعضی مرورگرها می‌گذارند
+    return formatted.replace("در تاریخ ", "").replace(",", " ساعت");
 }
 
 
