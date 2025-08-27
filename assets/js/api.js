@@ -417,42 +417,47 @@ function get_list_chats(user_id,convesation_id) {
         data: { action: "get_list_chats", user_id },
         dataType: "json",
         success: function (response) {
-           let conversations_list   =response.conversations ?? []
-            if (conversations_list) {
-                let data_new = '';
-                let data_finish = '';
-                let data = '';
-                $.each(conversations_list, function (index, value) {
-                    if (value.status === 'new') {
-                        data_new += buildChatItemHTML(value);
-                    } else if(value.status === 'finished') {
-                        data_finish += buildChatItemHTML(value);
-                    }else  {
-                        data += buildChatItemHTML(value);
+            if (response.status == 'error'){
+                show_error('خطا','گفتگویی برای شما یافت نشد')
+            }else {
+                let conversations_list   =response.conversations ?? []
+                if (conversations_list) {
+                    let data_new = '';
+                    let data_finish = '';
+                    let data = '';
+                    $.each(conversations_list, function (index, value) {
+                        if (value.status === 'new') {
+                            data_new += buildChatItemHTML(value);
+                        } else if(value.status === 'finished') {
+                            data_finish += buildChatItemHTML(value);
+                        }else  {
+                            data += buildChatItemHTML(value);
+                        }
+                    });
+
+                    if (data_new !== '') $('.chat_list_answered_chats').html(data_new);
+                    if (data_finish !== '') $('.chat_list_finished_chats').html(data_finish);
+                    if (data !== '') $('.chat_list_answered_chats').html(data);
+
+                    if (convesation_id){
+
+                        var chat_item =  $('.chat_item_'+convesation_id)
+                        chat_item.addClass('active')
+                        let user_name = chat_item.find('.chat-name').text()
+                        chat_item.find('.new_message').remove()
+                        let chat_id = chat_item.attr('data-chat')
+                        let status = chat_item.attr('status')
+                        $('.chat-header-info h3').text(user_name)
+                        $('.chat_user_box').addClass('active')
+                        $('#chat_id_input').val(chat_id);
+                        get_messages_chat(chat_id, true);
                     }
-                });
 
-                if (data_new !== '') $('.chat_list_answered_chats').html(data_new);
-                if (data_finish !== '') $('.chat_list_finished_chats').html(data_finish);
-                if (data !== '') $('.chat_list_answered_chats').html(data);
-
-                if (convesation_id){
-
-                    var chat_item =  $('.chat_item_'+convesation_id)
-                    chat_item.addClass('active')
-                    let user_name = chat_item.find('.chat-name').text()
-                    chat_item.find('.new_message').remove()
-                    let chat_id = chat_item.attr('data-chat')
-                    let status = chat_item.attr('status')
-                    $('.chat-header-info h3').text(user_name)
-                    $('.chat_user_box').addClass('active')
-                    $('#chat_id_input').val(chat_id);
-                    get_messages_chat(chat_id, true);
+                } else {
+                    $("#response").html("<p style='color:red'>" + response.message + "</p>");
                 }
-
-            } else {
-                $("#response").html("<p style='color:red'>" + response.message + "</p>");
             }
+
             $('.loading_page_back').hide();
         },
         error: function (xhr, status, error) {
