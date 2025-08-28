@@ -25,6 +25,7 @@ function toShamsi(dateInput) {
         timeZone: "Asia/Tehran"
     });
 }
+
 function toShamsiPretty(dateInput) {
     let date;
 
@@ -39,7 +40,14 @@ function toShamsiPretty(dateInput) {
     }
 
     // گرفتن بخش‌های مختلف تاریخ شمسی
-    const options = { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Tehran" };
+    const options = {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        hour: "2-digit",
+        minute: "2-digit",
+        timeZone: "Asia/Tehran"
+    };
     const formatter = new Intl.DateTimeFormat("fa-IR", options);
 
     // رشته‌ی نهایی
@@ -59,35 +67,38 @@ function get_id() {
     }
     return null;
 }
+
 function truncateText(text, maxLength = 20) {
     if (!text) return '';
     return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
 }
+
 // -------------------------
 // ساخت HTML پیام
 // -------------------------
 let svg_check_send = `<div class="svg_check_send"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></div>`
 let svg_check_seen = `<div class="svg_check_seen"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></div>`
-function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = null ,seen = false) {
 
-    const time = timestamp || toShamsi(Date.now() );
+function buildMessageHTML(id = 0, message, type, senderClass = 'sent', timestamp = null, seen = false) {
+
+    const time = timestamp || toShamsi(Date.now());
     let safeMessage = message.replace(/\n/g, "<br>");
     let svg_check = ''
-    if (senderClass === 'sent'){
+    if (senderClass === 'sent') {
         svg_check = svg_check_send
-        if (seen){
+        if (seen) {
             svg_check += svg_check_seen
         }
     }
 
-    let chat_id =$('#chat_id_input').val()
+    let chat_id = $('#chat_id_input').val()
 
-    if (chat_id){
+    if (chat_id) {
         let message_show = message
-        if (type !== 'text'){
-            message_show ='فایل'
+        if (type !== 'text') {
+            message_show = 'فایل'
         }
-        $('.chat_item_'+chat_id).find('.chat-last-message').text(truncateText(message_show))
+        $('.chat_item_' + chat_id).find('.chat-last-message').text(truncateText(message_show))
     }
 
     if (type === 'image') {
@@ -110,7 +121,7 @@ function buildMessageHTML(id=0,message, type, senderClass = 'sent', timestamp = 
             </div>
             ${svg_check}
         </div>`;
-    }  else if (type === 'file') {
+    } else if (type === 'file') {
         return `
         <div class="message ${senderClass}" id="message_${id}" data-id="${id}">
             <div class="message-bubble voice_message">
@@ -150,7 +161,7 @@ function appendMessage(chatBox, messageHTML) {
 // ارسال پیام
 // -------------------------
 function send_messages_chat(chat_id, message, type = 'text') {
-    if(message !== '') {
+    if (message !== '') {
         const chatBox = $('.chat_user_box_messages');
         let id = Date.now()
         const messageHTML = buildMessageHTML(id, message, type, 'sent');
@@ -216,7 +227,7 @@ function bindInfiniteScroll() {
             $.ajax({
                 url: ajaxUrl,
                 type: "POST",
-                data: { action: "get_older_messages", chat_id, last_id: firstMsgId },
+                data: {action: "get_older_messages", chat_id, last_id: firstMsgId},
                 dataType: "json"
             })
                 .done(function (response) {
@@ -250,7 +261,6 @@ function bindInfiniteScroll() {
 }
 
 
-
 // وقتی چت را باز می‌کنی: لود کن، اسکرول را انتهای گفتگو ببر، بعد بایند کن
 function get_messages_chat(chat_id, scrollToBottom = true) {
     const $box = $('.chat_user_box_messages');
@@ -259,7 +269,7 @@ function get_messages_chat(chat_id, scrollToBottom = true) {
     $.ajax({
         url: ajaxUrl,
         type: "POST",
-        data: { action: "get_messages_chat", chat_id },
+        data: {action: "get_messages_chat", chat_id},
         dataType: "json",
         success: function (response) {
             if (response && response.messages && response.messages.length) {
@@ -279,8 +289,8 @@ function get_messages_chat(chat_id, scrollToBottom = true) {
                 bindInfiniteScroll();
 
             } else {
-                let start_time = $('.chat_item_'+chat_id).attr('start-time')
-                let end_time = $('.chat_item_'+chat_id).attr('end-time')
+                let start_time = $('.chat_item_' + chat_id).attr('start-time')
+                let end_time = $('.chat_item_' + chat_id).attr('end-time')
                 start_time = toShamsi(start_time)
                 end_time = toShamsi(end_time)
                 $box.html(`<p class='not_find_message'>پیام خود را بنویسید <br> زمان پاسخ گویی بین ${start_time} تا ${end_time} است </p>`);
@@ -298,14 +308,14 @@ function check_message(data) {
     const currentChatId = Number($('#chat_id_input').val());
     const chatId = Number(data.chat_id);
     if (chatId === currentChatId) {
-        const msgHTML = buildMessageHTML(data.message_id,data.message, data.message_type, 'received');
+        const msgHTML = buildMessageHTML(data.message_id, data.message, data.message_type, 'received');
 
-        if ($('.chat_user_box_messages').find('.not_find_message')){
+        if ($('.chat_user_box_messages').find('.not_find_message')) {
             $('.chat_user_box_messages').find('.not_find_message').remove()
         }
         appendMessage(chatBox, msgHTML);
 
-        seen_message(data.message_id,data.chat_id)
+        seen_message(data.message_id, data.chat_id)
     } else {
         const item = $('.chat_item_' + chatId);
         if (item.find('.new_message').length) {
@@ -317,16 +327,17 @@ function check_message(data) {
         item.find('.chat-last-message').text(truncateText(data.message))
     }
 }
+
 // -------------------------
 // بررسی پیام جدید
 // -------------------------
-function seen_message(message_id,chat_id) {
+function seen_message(message_id, chat_id) {
 
     if (message_id > 0) {
         $.ajax({
             url: ajaxUrl,
             type: "POST",
-            data: {action: "seen_message", message_id,chat_id},
+            data: {action: "seen_message", message_id, chat_id},
             dataType: "json",
             success: function (response) {
                 if (response) {
@@ -341,16 +352,27 @@ function seen_message(message_id,chat_id) {
         });
     }
 }
+
 function seen_old_message(data) {
 
     let id = data.message_id
+    if ($.isNumeric(id)) {
+        let message = $('#message_' + id)
 
-        var message =$('#message_'+id)
-
-        if (!message.find('.svg_check_seen').length){
+        if (!message.find('.svg_check_seen').length) {
             message.append(svg_check_seen)
         }
-
+    }else {
+        let ids = id.split('-');
+        console.log(ids)
+        $.each(ids, function(index, item) {
+            let message = $('#message_' + item)
+            console.log(message)
+            if (!message.find('.svg_check_seen').length) {
+                message.append(svg_check_seen)
+            }
+        });
+    }
 
 }
 
@@ -410,17 +432,18 @@ function buildChatItemHTML(value) {
         </div>`;
 }
 
-function get_list_chats(user_id,convesation_id) {
+function get_list_chats(user_id, convesation_id) {
     $.ajax({
         url: ajaxUrl,
         type: "POST",
-        data: { action: "get_list_chats", user_id },
+        data: {action: "get_list_chats", user_id},
         dataType: "json",
         success: function (response) {
-            if (response.status == 'error'){
-                show_error('خطا','گفتگویی برای شما یافت نشد')
-            }else {
-                let conversations_list   =response.conversations ?? []
+            if (response.status == 'error') {
+                show_error('خطا', 'گفتگویی برای شما یافت نشد')
+            } else {
+                let conversations_list = response.conversations ?? []
+
                 if (conversations_list) {
                     let data_new = '';
                     let data_finish = '';
@@ -428,9 +451,9 @@ function get_list_chats(user_id,convesation_id) {
                     $.each(conversations_list, function (index, value) {
                         if (value.status === 'new') {
                             data_new += buildChatItemHTML(value);
-                        } else if(value.status === 'finished') {
+                        } else if (value.status === 'finished') {
                             data_finish += buildChatItemHTML(value);
-                        }else  {
+                        } else {
                             data += buildChatItemHTML(value);
                         }
                     });
@@ -439,9 +462,9 @@ function get_list_chats(user_id,convesation_id) {
                     if (data_finish !== '') $('.chat_list_finished_chats').html(data_finish);
                     if (data !== '') $('.chat_list_answered_chats').html(data);
 
-                    if (convesation_id){
+                    if (convesation_id) {
 
-                        var chat_item =  $('.chat_item_'+convesation_id)
+                        var chat_item = $('.chat_item_' + convesation_id)
                         chat_item.addClass('active')
                         let user_name = chat_item.find('.chat-name').text()
                         chat_item.find('.new_message').remove()
@@ -476,7 +499,7 @@ jQuery(document).ready(function ($) {
     $.ajax({
         url: ajaxUrl,
         type: "POST",
-        data: { action: "check_user_id", id_client: idClient },
+        data: {action: "check_user_id", id_client: idClient},
         dataType: "json",
         success: function (response) {
             if (response.status === "success") {
@@ -485,12 +508,12 @@ jQuery(document).ready(function ($) {
                 window.history.replaceState({}, document.title, url);
                 let user_id = response.user_id;
                 connect_io(user_id);
-                get_list_chats(user_id,response.convesation_id);
+                get_list_chats(user_id, response.convesation_id);
 
 
             } else {
                 $('.loading_page_back').hide();
-                show_error('خطا','کاربر یافت نشد')
+                show_error('خطا', 'کاربر یافت نشد')
             }
         },
         error: function (xhr, status, error) {
@@ -499,9 +522,9 @@ jQuery(document).ready(function ($) {
     });
 
 
-
 });
-function show_error(title='خطا',message='خطایی رخ داده است'){
+
+function show_error(title = 'خطا', message = 'خطایی رخ داده است') {
     $(".popup_error_message h3").text(title)
     $(".popup_error_message p").text(message)
     $(".popup_error_message_back").show()
