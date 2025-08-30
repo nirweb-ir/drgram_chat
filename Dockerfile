@@ -10,7 +10,7 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql && \
 
 # انجام تنظیمات پیشنهادی (php.ini development)
 # می‌تونید تنظیمات را به دلخواه تغییر دهید یا فایل اختصاصی اضافه کنید
-# COPY custom-php.ini /usr/local/etc/php/conf.d/
+COPY custom-php.ini /usr/local/etc/php/conf.d/
 
 # کپی کردن سورس پروژه به روت داکر (پوشه public_html شما)
 COPY . /var/www/html/
