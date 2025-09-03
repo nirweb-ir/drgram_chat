@@ -364,10 +364,10 @@ function seen_old_message(data) {
         }
     }else {
         let ids = id.split('-');
-        console.log(ids)
+        // console.log(ids)
         $.each(ids, function(index, item) {
             let message = $('#message_' + item)
-            console.log(message)
+            // console.log(message)
             if (!message.find('.svg_check_seen').length) {
                 message.append(svg_check_seen)
             }
@@ -385,7 +385,7 @@ function connect_io(idClient) {
 
     if (userId) {
         socket.on("connect", () => {
-            console.log("اتصال برقرار شد:", socket.id);
+            console.log("اتصال برقرار شد:");
             socket.emit("register", userId);
         });
         socket.on("new-message", (data) => {
@@ -473,6 +473,15 @@ function get_list_chats(user_id, convesation_id) {
                         $('.chat-header-info h3').text(user_name)
                         $('.chat_user_box').addClass('active')
                         $('#chat_id_input').val(chat_id);
+                        let start = $('.chat_item_' + convesation_id).attr('start-time')
+                        if (new Date(start) > new Date()) {
+                            $('.notifications_pin_top').show()
+                            $('.notifications_pin_top span').text(toShamsiPretty(start))
+
+                        } else {
+                            $('.notifications_pin_top').hide()
+                        }
+
                         get_messages_chat(chat_id, true);
                     }
 
