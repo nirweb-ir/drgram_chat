@@ -79,16 +79,19 @@ function truncateText(text, maxLength = 20) {
 let svg_check_send = `<div class="svg_check_send"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></div>`
 let svg_check_seen = `<div class="svg_check_seen"><svg width="10px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 109.76" style="enable-background:new 0 0 122.88 109.76" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#777777;}</style><g><path class="st0" d="M0,52.88l22.68-0.3c8.76,5.05,16.6,11.59,23.35,19.86C63.49,43.49,83.55,19.77,105.6,0h17.28 C92.05,34.25,66.89,70.92,46.77,109.76C36.01,86.69,20.96,67.27,0,52.88L0,52.88z"/></g></svg></div>`
 
-function buildMessageHTML(id = 0, message, type, senderClass = 'sent', timestamp = null, seen = false) {
+function buildMessageHTML(id = 0, message,display_name, type, senderClass = 'sent', timestamp = null, seen = false) {
 
     const time = timestamp || toShamsi(Date.now());
     let safeMessage = message.replace(/\n/g, "<br>");
     let svg_check = ''
     if (senderClass === 'sent') {
+        display_name = ''
         svg_check = svg_check_send
         if (seen) {
             svg_check += svg_check_seen
         }
+    }else {
+        display_name = display_name +' - '
     }
 
     let chat_id = $('#chat_id_input').val()
@@ -108,7 +111,7 @@ function buildMessageHTML(id = 0, message, type, senderClass = 'sent', timestamp
                 <a href="${message}" target="_blank">
                     <img src="${message}">
                 </a>
-                <div class="message-time">${time}</div>
+                <div class="message-time">${display_name}${time}</div>
             </div>
             ${svg_check}
         </div>`;
@@ -117,7 +120,7 @@ function buildMessageHTML(id = 0, message, type, senderClass = 'sent', timestamp
         <div class="message ${senderClass}" id="message_${id}" data-id="${id}">
             <div class="message-bubble voice_message">
                 <audio id="player" src="${message}" controls></audio>
-                <div class="message-time">${time}</div>
+                <div class="message-time">${display_name}${time}</div>
             </div>
             ${svg_check}
         </div>`;
@@ -131,7 +134,7 @@ function buildMessageHTML(id = 0, message, type, senderClass = 'sent', timestamp
                 دانلود فایل
                 </a>
                 </div>
-                <div class="message-time">${time}</div>
+                <div class="message-time">${display_name}${time}</div>
             </div>
             ${svg_check}
         </div>`;
@@ -140,7 +143,7 @@ function buildMessageHTML(id = 0, message, type, senderClass = 'sent', timestamp
         <div class="message ${senderClass}" id="message_${id}" data-id="${id}">
             <div class="message-bubble">
                 ${safeMessage}
-                <div class="message-time">${time}</div>
+                <div class="message-time">${display_name}${time}</div>
             </div>
             ${svg_check}
         </div>`;
@@ -164,7 +167,7 @@ function send_messages_chat(chat_id, message, type = 'text') {
     if (message !== '') {
         const chatBox = $('.chat_user_box_messages');
         let id = Date.now()
-        const messageHTML = buildMessageHTML(id, message, type, 'sent');
+        const messageHTML = buildMessageHTML(id, message,'', type, 'sent');
         appendMessage(chatBox, messageHTML);
         if ($('.chat_user_box_messages').find('.not_find_message').length) {
             $('.chat_user_box_messages').find('.not_find_message').remove()
@@ -235,7 +238,7 @@ function bindInfiniteScroll() {
                         let html = '';
                         response.messages.reverse().forEach(msg => {
                             const senderClass = Number(get_id()) === Number(msg.user_id) ? 'sent' : 'received';
-                            html += buildMessageHTML(msg.id, msg.content, msg.message_type, senderClass, toShamsi(msg.created_at), msg.status);
+                            html += buildMessageHTML(msg.id, msg.content,msg.display_name, msg.message_type, senderClass, toShamsi(msg.created_at), msg.status);
                         });
 
                         $box.prepend(html);
@@ -277,7 +280,7 @@ function get_messages_chat(chat_id, scrollToBottom = true) {
                 // فرض: API جدید→قدیم می‌دهد؛ برای نمایش از قدیم→جدید:
                 response.messages.reverse().forEach(msg => {
                     const senderClass = Number(get_id()) === Number(msg.user_id) ? 'sent' : 'received';
-                    html += buildMessageHTML(msg.id, msg.content, msg.message_type, senderClass, toShamsi(msg.created_at), msg.status);
+                    html += buildMessageHTML(msg.id, msg.content,msg.display_name, msg.message_type, senderClass, toShamsi(msg.created_at), msg.status);
                 });
                 $box.html(html);
 
@@ -308,7 +311,7 @@ function check_message(data) {
     const currentChatId = Number($('#chat_id_input').val());
     const chatId = Number(data.chat_id);
     if (chatId === currentChatId) {
-        const msgHTML = buildMessageHTML(data.message_id, data.message, data.message_type, 'received');
+        const msgHTML = buildMessageHTML(data.message_id, data.message,data.display_name, data.message_type, 'received');
 
         if ($('.chat_user_box_messages').find('.not_find_message')) {
             $('.chat_user_box_messages').find('.not_find_message').remove()
