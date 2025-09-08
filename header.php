@@ -6,7 +6,7 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 
     <title> پذیرش چت </title>
-    <link rel="stylesheet" href="./assets/css/chat.css?v=1.1.1.3">
+    <link rel="stylesheet" href="./assets/css/chat.css?v=1.1.2">
     <link rel="stylesheet" href="./assets/font/fontiran.css">
     <script>
         const ajaxUrl = "<?php echo 'functions/ajax.php'; ?>";

@@ -106,13 +106,15 @@ html, body {
 .section_show_pv_container {
     padding: 15px;
     height: 100%;
+    width: 30%;
+    min-width: 330px;
 }
 
 .sidebar {
     display: flex;
     background-color: #ffffff;
     height: 100%;
-    width: 350px;
+    /* width: 350px; */
     flex-direction: column;
     transition: transform 0.3s ease;
     z-index: 100;
@@ -1367,6 +1369,7 @@ canvas {
     height: 100%;
     padding: 15px;
     border-radius: 15px;
+    width: 70%;
 }
 
 .section_show_message_header {
@@ -1702,3 +1705,22 @@ canvas {
 .toast.error { background-color: #e74c3c; }   /* Ù‚Ø±Ù…Ø² Ø¨Ø±Ø§ÛŒ Ø®Ø·Ø§ */
 .toast.success { background-color: #2ecc71; } /* Ø³Ø¨Ø² Ø¨Ø±Ø§ÛŒ Ù…ÙˆÙÙ‚ */
 
+@media (max-width: 1100px) {
+    .section_show_pv_container{
+        width: 35%;
+        min-width: 280px;
+    }
+    .section_show_message{
+        width: 65%;
+    }
+}
+
+@media (max-width: 768px) {
+    .section_show_pv_container{
+        width: max-content;
+        min-width: 0;
+    }
+    .section_show_message{
+        width: 100%;
+    }
+}
