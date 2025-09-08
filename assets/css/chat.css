@@ -467,7 +467,7 @@ p.not_find_message {
 
 .message-bubble img {
     width: 100%;
-    max-width: 100px;
+    max-width: 250px;
     height: auto;
     display: block;
     border-radius: 4px;
@@ -1383,6 +1383,7 @@ canvas {
     width: 25px !important;
     height: auto;
     margin-left: 5px;
+    display: none;
 }
 
 .section_show_message_header_item {
@@ -1540,6 +1541,9 @@ canvas {
 
 
 @media (max-width: 768px) {
+    .section_show_message_header_item svg{
+        display: block;
+    }
 
     .section_show_pv_container {
         padding: 0;
